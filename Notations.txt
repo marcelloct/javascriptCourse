@@ -1,0 +1,14 @@
+------------------------------------------------------ Section 1: Fundamentals ----------------------------------------------------
+
+Javascript: High-Level, Object_oriented, Multi-paradigm programming language
+programming language - instruct computer to do things
+High-Level - we don't have to worry about complex stuff like memory management
+Object_oriented - based on objects, for storing most kinds of data
+Multi-paradigm - we can use different styles of programming
+
+variable - 'box with a value'
+
+data types -> Objects and primitives
+
+primitive = number, string, boolean, undefined, null, symbol, bigint
+objects = 
