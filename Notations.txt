@@ -11,4 +11,15 @@ variable - 'box with a value'
 data types -> Objects and primitives
 
 primitive = number, string, boolean, undefined, null, symbol, bigint
-objects = 
+
+operators ->
+math operator - let x = 10 + 5
+assignment operator - x = 10, x += 10, x++
+comparison operator - x > y, x <= y
+
+operators precedence - https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
+
+control structures: if/else
+
+type conversion - Number(), String()
+type coercion - 'I am ' + 23 + ' years old', '23' - '10' - 3 
