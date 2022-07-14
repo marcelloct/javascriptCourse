@@ -31,3 +31,9 @@ type conversion - Number(), String()
 type coercion - 'I am ' + 23 + ' years old', '23' - '10' - 3
 
 falsy values: 0, '', undefined, null, NaN
+
+strict mode - avoid accidental errors - 'use strict'; in the beggining of the file
+
+function declaration - can be used before it's declared
+function expression - essentially a fuction value stored ins a variable
+arrow function - great for quick oneline functions, don't accept 'this.' keyword
