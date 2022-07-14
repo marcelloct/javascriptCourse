@@ -8,6 +8,9 @@ Multi-paradigm - we can use different styles of programming
 
 variable - 'box with a value'
 
+expression - piece of code that produce a value - 3 + 4, 1991, true && false, ...
+statement -  bigger piece of code that is executed and which does not produce a value on itself / produce actions - if/else, switch, ...
+
 data types -> Objects and primitives
 
 primitive = number, string, boolean, undefined, null, symbol, bigint
@@ -16,10 +19,15 @@ operators ->
 math operator - let x = 10 + 5
 assignment operator - x = 10, x += 10, x++
 comparison operator - x > y, x <= y
+equality operators - x == y, x === y, x !== y, x != y
+logic operators - &&, ||, !
+conditional operator - x >= 18 ? console.log() : console.log()
 
 operators precedence - https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
 
 control structures: if/else
 
 type conversion - Number(), String()
-type coercion - 'I am ' + 23 + ' years old', '23' - '10' - 3 
+type coercion - 'I am ' + 23 + ' years old', '23' - '10' - 3
+
+falsy values: 0, '', undefined, null, NaN
