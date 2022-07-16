@@ -409,3 +409,152 @@ if(markObject.resultsBMI > johnObject.resultsBMI) {
 for(let rep = 1; rep <= 5; rep++) {
     console.log(`Lifting weights repetition ${rep}`)
 }
+
+///////////////////////////////////////////////////////////////////////
+/// Looping Arrays, Breaking and Continuing
+
+const myArray = [
+  'Jonas',
+  'Schmedtmann',
+  1991,
+  'teacher',
+  ['Michael', 'Peter'],
+  true
+];
+
+const typesInArray = [];
+
+for(let i = 0; i < myArray.length; i++) {
+  // Reading from myArray
+  console.log(myArray[i], typeof myArray[i]);
+
+  // Filling types array
+  typesInArray.push(typeof myArray[i]);
+}
+
+console.log(typesInArray);
+
+const yearsArray = [1991, 2007, 1969];
+const receiveAges = [];
+
+for (let i = 0; i < yearsArray.length; i++) {
+  receiveAges.push(2037 - yearsArray[i]);
+}
+
+console.log(receiveAges)
+
+// continue and break
+console.log('------- Only Strings --------')
+for(let i = 0; i < myArray.length; i++) {
+  if(typeof myArray[i] !== 'string') continue;
+  console.log(myArray[i], typeof myArray[i]);
+}
+
+console.log('------- Break with number --------')
+for(let i = 0; i < myArray.length; i++) {
+  if(typeof myArray[i] === 'number') break;
+  console.log(myArray[i], typeof myArray[i]);
+}
+
+
+const percentages2 = [];
+
+for (let i = 0; i < populations.length; i++) {
+  const perc = percentageOfWorld1(populations[i])
+  percentages2.push(perc)
+}
+
+console.log(percentages2);
+
+////////////////////////////////////////////////////////////////////////
+/// Looping Backwards and Loops in Loops
+
+for (let i = myArray.length - 1; i >= 0; i--) {
+  console.log(i, myArray[i])
+}
+
+for(let ex = 1; ex <= 3; ex++) {
+  console.log(`------ Starting Exercise ${ex} -------`);
+
+  for (let rep = 1; rep <= 5; rep++) {
+    console.log(`Exercise ${ex}: Lifting weights repetition ${rep}`)
+  }
+}
+
+const listOfNeightbours = [['Canada', 'Mexico'], ['Spain'], ['Norway', 'Sweden',
+'Russia']];
+
+for (let i = 0; i < listOfNeightbours.length; i++) {
+  // console.log(listOfNeightbours[i])
+  for (let y = 0; y < listOfNeightbours[i].length; y++) {
+    console.log(listOfNeightbours[i][y])
+  }
+}
+
+////////////////////////////////////////////////////////////////////////
+/// While Loop
+// Not have to depend on any counter variable
+// Used when you dont know how many iterations the loop will have
+let w = 1
+while (w <= 5) {
+  console.log(`WHILE: Lifting weights repetition ${w}`);
+  w++;
+}
+
+let dice = Math.trunc(Math.random() * 6) + 1;
+console.log(dice)
+
+while (dice !== 6) {
+  console.log(`You rolled a ${dice}`);
+  dice = Math.trunc(Math.random() * 6) + 1;
+  if (dice === 6) console.log('Loop is about to end...')
+}
+
+
+
+for (let i = 0; i < populations.length; i++) {
+  const perc = percentageOfWorld1(populations[i])
+  percentages2.push(perc)
+}
+
+const percentages3 = []
+let i = 0
+while (i < populations.length) {
+  percentages3.push(percentageOfWorld1(populations[i]))
+  i++
+}
+console.log(percentages3)
+
+// --------------------------------------------- Challenge #4
+
+const billsArray = [22, 295, 176, 440, 37, 105];
+const tipsArray = [];
+const totalArray = [];
+
+for (let i = 0; i < billsArray.length; i++) {
+  const tip = calcTip(billsArray[i]);
+  tipsArray.push(tip)
+  totalArray.push(tip + billsArray[i])
+}
+
+console.log(billsArray, tipsArray, totalArray)
+
+function calcAverage2(arr) {
+  let sum = 0 
+  for (let i = 0; i < arr.length; i++) {
+    // sum = sum + arr[i]
+    sum += arr[i];
+  }
+  console.log(sum)
+  return sum / arr.length
+} 
+
+console.log(calcAverage2(totalArray))
+
+for (let i = 0; i < billsArray.length && i < tipsArray.length && i < totalArray.length; i++) {
+  console.log(
+    `The bill was ${billsArray[i]}, the tip was ${tipsArray[i]}, and the total value ${totalArray[i]}`
+ );
+}
+
+// --------------------------------------------- Challenge #4 Complete
