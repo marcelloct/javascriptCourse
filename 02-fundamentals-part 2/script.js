@@ -73,7 +73,7 @@ console.log(percChina2, percBrazil2, percPortugal2);
 // const name = one parameter => one line of code, 'return' can be omited in this case
 // const name = (parameters) => {code}
 
-const percentageOfWorld3 = (population) => (population / 7900) * 100;
+const percentageOfWorld3 = population => (population / 7900) * 100;
 
 const percChina3 = percentageOfWorld3(1441);
 const percBrazil3 = percentageOfWorld3(212);
@@ -345,58 +345,61 @@ console.log(jonasObject2.age);
 console.log(jonasObject2.getSummary());
 
 const myCountry2 = {
-    country: "Brazil",
-    capital: "Brasilia",
-    language: "Portuguese",
-    population: 212,
-    neighbours: neighbours,
+  country: "Brazil",
+  capital: "Brasilia",
+  language: "Portuguese",
+  population: 212,
+  neighbours: neighbours,
 
-    describe: function() {
-        return `${this.country} has ${this["population"]} million ${this.language}-speaking people, ${this.neighbours.length} neighbouring countries and a capital called ${this.capital}`
-    },
+  describe: function () {
+    return `${this.country} has ${this["population"]} million ${this.language}-speaking people, ${this.neighbours.length} neighbouring countries and a capital called ${this.capital}`;
+  },
 
-    checkIsland: function() {
-        this.isIsland = this.neighbours.length === 0 ? true : false;
-    }
-  };
+  checkIsland: function () {
+    this.isIsland = this.neighbours.length === 0 ? true : false;
+  },
+};
 
 console.log(myCountry2.describe());
-console.log(myCountry2.checkIsland())
-console.log(myCountry2)
+console.log(myCountry2.checkIsland());
+console.log(myCountry2);
 
 // --------------------------------------------- Challenge #3
 
 const markObject = {
-    fullName: 'Mark Miller',
-    mass: 78,
-    height: 1.69,
+  fullName: "Mark Miller",
+  mass: 78,
+  height: 1.69,
 
-    calcBMI: function() {
-        this.resultsBMI = this.mass / this.height ** 2;
-        return this.resultsBMI
-    }
-}
+  calcBMI: function () {
+    this.resultsBMI = this.mass / this.height ** 2;
+    return this.resultsBMI;
+  },
+};
 
 const johnObject = {
-    fullName: 'John Smith',
-    mass: 92,
-    height: 1.95,
+  fullName: "John Smith",
+  mass: 92,
+  height: 1.95,
 
-    calcBMI: function() {
-        return this.resultsBMI = this.mass / this.height ** 2;
-    }
-}
+  calcBMI: function () {
+    return (this.resultsBMI = this.mass / this.height ** 2);
+  },
+};
 
 markObject.calcBMI();
 johnObject.calcBMI();
 
-console.log(markObject.resultsBMI, johnObject.resultsBMI)
+console.log(markObject.resultsBMI, johnObject.resultsBMI);
 
-
-if(markObject.resultsBMI > johnObject.resultsBMI) {
-    console.log(`${markObject.fullName}'s BMI (${markObject.resultsBMI}) is higher than ${johnObject.fullName}'s BMI (${johnObject.resultsBMI})`);
+if (markObject.resultsBMI > johnObject.resultsBMI) {
+  console.log(
+    `${markObject.fullName}'s BMI (${markObject.resultsBMI}) is higher than ${johnObject.fullName}'s BMI (${johnObject.resultsBMI})`
+  );
 } else {
-    console.log(`${johnObject.fullName}'s BMI (${johnObject.resultsBMI}) is higher than ${markObject.fullName}'s BMI (${markObject.resultsBMI})`);
+  console.log(
+    `${johnObject.fullName}'s BMI (${johnObject.resultsBMI}) is higher than ${markObject.fullName}'s BMI (${markObject.resultsBMI})`
+  );
 }
 
 // --------------------------------------------- Challenge #3 Complete
@@ -406,25 +409,25 @@ if(markObject.resultsBMI > johnObject.resultsBMI) {
 
 // (initializer, condition, increment)
 // for loop keeps running while condition is TRUE
-for(let rep = 1; rep <= 5; rep++) {
-    console.log(`Lifting weights repetition ${rep}`)
+for (let rep = 1; rep <= 5; rep++) {
+  console.log(`Lifting weights repetition ${rep}`);
 }
 
 ///////////////////////////////////////////////////////////////////////
 /// Looping Arrays, Breaking and Continuing
 
 const myArray = [
-  'Jonas',
-  'Schmedtmann',
+  "Jonas",
+  "Schmedtmann",
   1991,
-  'teacher',
-  ['Michael', 'Peter'],
-  true
+  "teacher",
+  ["Michael", "Peter"],
+  true,
 ];
 
 const typesInArray = [];
 
-for(let i = 0; i < myArray.length; i++) {
+for (let i = 0; i < myArray.length; i++) {
   // Reading from myArray
   console.log(myArray[i], typeof myArray[i]);
 
@@ -441,27 +444,26 @@ for (let i = 0; i < yearsArray.length; i++) {
   receiveAges.push(2037 - yearsArray[i]);
 }
 
-console.log(receiveAges)
+console.log(receiveAges);
 
 // continue and break
-console.log('------- Only Strings --------')
-for(let i = 0; i < myArray.length; i++) {
-  if(typeof myArray[i] !== 'string') continue;
+console.log("------- Only Strings --------");
+for (let i = 0; i < myArray.length; i++) {
+  if (typeof myArray[i] !== "string") continue;
   console.log(myArray[i], typeof myArray[i]);
 }
 
-console.log('------- Break with number --------')
-for(let i = 0; i < myArray.length; i++) {
-  if(typeof myArray[i] === 'number') break;
+console.log("------- Break with number --------");
+for (let i = 0; i < myArray.length; i++) {
+  if (typeof myArray[i] === "number") break;
   console.log(myArray[i], typeof myArray[i]);
 }
-
 
 const percentages2 = [];
 
 for (let i = 0; i < populations.length; i++) {
-  const perc = percentageOfWorld1(populations[i])
-  percentages2.push(perc)
+  const perc = percentageOfWorld1(populations[i]);
+  percentages2.push(perc);
 }
 
 console.log(percentages2);
@@ -470,24 +472,27 @@ console.log(percentages2);
 /// Looping Backwards and Loops in Loops
 
 for (let i = myArray.length - 1; i >= 0; i--) {
-  console.log(i, myArray[i])
+  console.log(i, myArray[i]);
 }
 
-for(let ex = 1; ex <= 3; ex++) {
+for (let ex = 1; ex <= 3; ex++) {
   console.log(`------ Starting Exercise ${ex} -------`);
 
   for (let rep = 1; rep <= 5; rep++) {
-    console.log(`Exercise ${ex}: Lifting weights repetition ${rep}`)
+    console.log(`Exercise ${ex}: Lifting weights repetition ${rep}`);
   }
 }
 
-const listOfNeightbours = [['Canada', 'Mexico'], ['Spain'], ['Norway', 'Sweden',
-'Russia']];
+const listOfNeightbours = [
+  ["Canada", "Mexico"],
+  ["Spain"],
+  ["Norway", "Sweden", "Russia"],
+];
 
 for (let i = 0; i < listOfNeightbours.length; i++) {
   // console.log(listOfNeightbours[i])
   for (let y = 0; y < listOfNeightbours[i].length; y++) {
-    console.log(listOfNeightbours[i][y])
+    console.log(listOfNeightbours[i][y]);
   }
 }
 
@@ -495,35 +500,33 @@ for (let i = 0; i < listOfNeightbours.length; i++) {
 /// While Loop
 // Not have to depend on any counter variable
 // Used when you dont know how many iterations the loop will have
-let w = 1
+let w = 1;
 while (w <= 5) {
   console.log(`WHILE: Lifting weights repetition ${w}`);
   w++;
 }
 
 let dice = Math.trunc(Math.random() * 6) + 1;
-console.log(dice)
+console.log(dice);
 
 while (dice !== 6) {
   console.log(`You rolled a ${dice}`);
   dice = Math.trunc(Math.random() * 6) + 1;
-  if (dice === 6) console.log('Loop is about to end...')
+  if (dice === 6) console.log("Loop is about to end...");
 }
-
-
 
 for (let i = 0; i < populations.length; i++) {
-  const perc = percentageOfWorld1(populations[i])
-  percentages2.push(perc)
+  const perc = percentageOfWorld1(populations[i]);
+  percentages2.push(perc);
 }
 
-const percentages3 = []
-let i = 0
+const percentages3 = [];
+let i = 0;
 while (i < populations.length) {
-  percentages3.push(percentageOfWorld1(populations[i]))
-  i++
+  percentages3.push(percentageOfWorld1(populations[i]));
+  i++;
 }
-console.log(percentages3)
+console.log(percentages3);
 
 // --------------------------------------------- Challenge #4
 
@@ -533,28 +536,60 @@ const totalArray = [];
 
 for (let i = 0; i < billsArray.length; i++) {
   const tip = calcTip(billsArray[i]);
-  tipsArray.push(tip)
-  totalArray.push(tip + billsArray[i])
+  tipsArray.push(tip);
+  totalArray.push(tip + billsArray[i]);
 }
 
-console.log(billsArray, tipsArray, totalArray)
+console.log(billsArray, tipsArray, totalArray);
 
 function calcAverage2(arr) {
-  let sum = 0 
+  let sum = 0;
   for (let i = 0; i < arr.length; i++) {
     // sum = sum + arr[i]
     sum += arr[i];
   }
-  console.log(sum)
-  return sum / arr.length
-} 
+  console.log(sum);
+  return sum / arr.length;
+}
 
-console.log(calcAverage2(totalArray))
+console.log(calcAverage2(totalArray));
 
-for (let i = 0; i < billsArray.length && i < tipsArray.length && i < totalArray.length; i++) {
+for (
+  let i = 0;
+  i < billsArray.length && i < tipsArray.length && i < totalArray.length;
+  i++
+) {
   console.log(
     `The bill was ${billsArray[i]}, the tip was ${tipsArray[i]}, and the total value ${totalArray[i]}`
- );
+  );
 }
 
 // --------------------------------------------- Challenge #4 Complete
+
+console.table(myCountry);
+
+// --------------------------------------------- Challenge #1 Developer Skills Section
+// 1) Understand
+// Array to string, separated by...
+// What is the X days? index + 1
+
+// 2) sub-problems
+// Transform array to string
+// Transform each element to string with °C
+// Strings needs to contain day (index + 1)
+// Add... between elements and start and end of string
+
+// return a string with these temperatures
+
+const data1 = [17, 21, 23];
+const data2 = [12, 5, -5, 0, 4];
+
+const printForecast = arr => {
+  let str = "";
+  for (let i = 0; i < arr.length; i++) {
+    str += `${arr[i]}°C in ${i + 1} days... `;
+  }
+  return "..." + str;
+};
+
+console.log(printForecast(data2));
