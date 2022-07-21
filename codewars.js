@@ -119,8 +119,72 @@ console.log(litres(3));
 
 //
 const zeroFuel = (distanceToPump, mpg, fuelLeft) => {
-  const x = (mpg * fuelLeft) / distanceToPump;
-  return x;
+  return mpg * fuelLeft >= distanceToPump ? true : false;
 };
 
-console.log(zeroFuel);
+console.log(zeroFuel(50, 25, 2));
+
+/////////////////////////////////////////////////////////////////////////
+///////
+
+// If we list all the natural numbers below 10
+// that are multiples of 3 or 5, we get 3, 5, 6 and 9.
+// The sum of these multiples is 23.
+
+// Finish the solution so that it returns the sum of all the
+// multiples of 3 or 5 below the number passed in.
+// Additionally, if the number is negative,
+// return 0 (for languages that do have them).
+
+// Note: If the number is a multiple of both 3 and 5, only count it once.
+
+// return sum of multiples 3 or 5
+// return 0 if negative
+// count once
+
+function solution(number) {
+  let multiples = 0;
+  // let arrayTest = []
+  for (let i = 1; i < number; i++) {
+    if (i % 3 === 0 || i % 5 === 0) {
+      //   arrayTest.push(i)
+      multiples += i;
+    }
+  }
+  return multiples;
+  // console.log(arrayTest);
+}
+
+console.log(solution(100));
+
+/////////////////////////////////////////////////////////////////////////
+///////
+
+// Create a function that takes an integer as an argument and
+// returns "Even" for even numbers or "Odd" for odd numbers.
+
+function even_or_odd(number) {
+  return number % 2 === 0 ? "Even" : "Odd";
+}
+console.log(even_or_odd(6));
+
+/////////////////////////////////////////////////////////////////////////
+///////
+
+// Trolls are attacking your comment section!
+
+// A common way to deal with this situation is to remove all
+// of the vowels from the trolls' comments, neutralizing the threat.
+
+// Your task is to write a function that takes a string and return a
+// new string with all vowels removed.
+
+// For example, the string
+// "This website is for losers LOL!" would become
+// "Ths wbst s fr lsrs LL!".
+
+function disemvowel(str) {
+  return str.replace(/[aeiou]/gi, "");
+}
+
+console.log(disemvowel("alendro"));
