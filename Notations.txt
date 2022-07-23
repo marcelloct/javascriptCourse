@@ -39,3 +39,8 @@ function expression - essentially a fuction value stored ins a variable
 arrow function - great for quick oneline functions, don't accept 'this.' keyword
 
 data structures - arrays, objects
+
+DOM (Document Object Model): Structured representation of HTML Documents. Allows Javascript to access HTML Elements and Stykles to manipulate them.
+
+DOM is not a part of the Javascript language
+DOM and DOM Methods -> Web APIs
