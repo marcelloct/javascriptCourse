@@ -18,7 +18,7 @@ logger();
 // }
 // name(arguments)
 
-// function expression / anonymous function
+// function expression
 
 // const name = function (parameters) {
 //     function body
