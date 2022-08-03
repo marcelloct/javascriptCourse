@@ -44,3 +44,31 @@ DOM (Document Object Model): Structured representation of HTML Documents. Allows
 
 DOM is not a part of the Javascript language
 DOM and DOM Methods -> Web APIs
+
+------------------------------------------------------ Section 8: Behind the Scenes ----------------------------------------------------
+
+JS Engine - Program that executes javascript code (browser)
+Every browser has it own JS engine
+Most weel known is V8 Engine (google)  used in Chrome, NodeJS (not browser)
+All JS Engine has call stack and heap
+Call stack - where our code is executed using execution context
+Hea- where object are stocked, stores all the objects that our application needs
+
+compilation vs intepretation
+Compilation - Entire code is converted into machine code at once, and writen to a binary file that can be executed by a computer
+Interpretation - Interpreter runs through the source code and executes it line by line
+
+Javascript is interpreter language 
+interpreter languages are much slower than compiled languages
+
+Modern Javascript now use a mix between compilation and interpretation, which is called just-in-time compilation
+
+Just-in-time (JIT) compilation - Entire code is converted into machine code at once, then executed immediately
+
+runtime in the browser > JS Engine (HEAP / CALL STACK) + WEB API's (DOM / Timers / Fetch API) + Callback Queue (click / timer / data)
+WEB API's - Functionalities provided to the engine, accessible on window object
+
+Arrow functions don't have this keyword an arguments object
+
+var is function-scoped
+const and let are block-scoped
