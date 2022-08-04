@@ -72,3 +72,6 @@ Arrow functions don't have this keyword an arguments object
 
 var is function-scoped
 const and let are block-scoped
+
+execution context - variable environment, scope chain, this keyword
+
