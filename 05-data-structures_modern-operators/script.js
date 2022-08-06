@@ -89,6 +89,15 @@ const restaurant2 = {
   orderPasta: function (ing1, ing2, ing3) {
     console.log(`Here is your delicious pasta with ${ing1},${ing2},${ing3}`);
   },
+  orderPizza: function (mainIngredient, ...otherIngredients) {
+    console.log(mainIngredient);
+    console.log(otherIngredients);
+    let str = "";
+    for (let i = 0; i < otherIngredients.length; i++) {
+      str += `- ${otherIngredients[i]}\n`;
+    }
+    console.log(str);
+  },
 };
 
 // using the same properties names in varaiables
@@ -138,6 +147,9 @@ restaurant2.orderDelivery({
 ////////////////////////////////////////////////////////////////////
 // The Spread Operator (...)
 
+// used to build new arrays or pass multiple values into a function
+// expand an array into individual elements
+
 // take all elements from array and doesn't create new variables like destructuring
 
 // we can use only where we write values separated by commas (,)
@@ -182,3 +194,123 @@ const restaurantCopy = { ...restaurant2 };
 restaurantCopy.name = "Ristorante Roma";
 console.log(restaurantCopy.name);
 console.log(restaurant2.name);
+
+////////////////////////////////////////////////////////////////////
+// Rest Pattern and Parameters
+
+// used to collect multiple elements and condense then into an array
+
+// we can use only where we write variables names separated by commas (,). NOT values separated by commas
+
+// 1) Destructuring
+
+// SPREAD, because on RIGHT side of =
+const arrSpread = [1, 2, ...[3, 4]];
+
+// REST, because on LEFT side of =
+const [ab, bc, ...others] = [1, 2, 3, 4, 5];
+console.log(ab, bc, others);
+
+const [pizza, , risotto, ...otherFood] = [
+  ...restaurant2.mainMenu,
+  ...restaurant2.starterMenu,
+];
+console.log(pizza, risotto, otherFood);
+
+// objects
+const { sat: saturday, ...weekdays } = restaurant2.openingHours;
+console.log(saturday, weekdays);
+
+// 2) Functions
+const add = function (...numbers) {
+  //   console.log(numbers);
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+  }
+  console.log(sum);
+};
+
+add(2, 3);
+add(5, 3, 7, 2);
+add(8, 2, 5, 3, 2, 1, 4);
+
+const n = [23, 5, 7];
+add(...n);
+
+restaurant2.orderPizza("mushrooms", "onions", "olives", "spinach");
+restaurant2.orderPizza("mushrooms");
+
+////////////////////////////////////////////////////////////////////////
+// Short Circuiting (&& and __)
+
+// Use ANY data type, return ANY data type, short-circuiting
+
+// return the first truthy value from the evaluation and ignore/not evaluate the others values
+console.log("----- OR -----");
+
+console.log(3 || "Jonas");
+console.log("" || "Jonas");
+console.log(true || 0);
+console.log(undefined || null);
+
+console.log(undefined || null || 0 || "" || "Hello" || 2);
+
+restaurant2.numGuests = 23;
+// const guests1 = restaurant2.numGuests ? restaurant2.numGuests : 10;
+// console.log(guests1);
+
+// the same result as before, but using shot-circuiting
+const guests2 = restaurant2.numGuests || 10;
+console.log(guests2);
+
+console.log("----- AND -----");
+// return the first falsy value from the evaluation and ignore/not evaluate the others values
+// but if all values evaluated are truthy, return the last evaluated one
+console.log(0 && "Jonas");
+console.log(7 && "Jonas");
+console.log("Jonas" && 23 && null && 7);
+console.log("Jonas" && 23 && "Hi" && 7);
+
+// if (restaurant2.orderPizza) {
+//   restaurant2.orderPizza("mushroom");
+// }
+
+// the same result as before, but using shot-circuiting
+restaurant2.orderPizza && restaurant2.orderPizza("mushrooms", "spinach");
+
+// for practical usage we can use the OR operator to set default values,
+// and we can use the AND operator to execute code in the second operand if the first one is true
+
+///////////////////////////////////////////////////////////////////
+// The Nullish Coalescing Operator (__)
+
+restaurant2.numGuestsNullish = 0;
+const guests3 = restaurant2.numGuestsNullish || 10;
+console.log(guests3);
+
+// Nullish: null and undefined (NOT 0 or '')
+// if is null or undefined return falsy (10) . 0 and '' are treated like truthy here
+const guestCorrect = restaurant2.numGuestsNullish ?? 10;
+console.log(guestCorrect);
+
+/////////////////////////////////////////////////////////////////////
+//  Looping Arrays The for-of Loop
+
+const menu2 = [...restaurant2.starterMenu, ...restaurant2.mainMenu];
+
+// can be used continue and break
+
+for (const item of menu2) console.log(item);
+
+// to get the index
+
+// for (const item of menu2.entries()) {
+//   console.log(`${item[0] + 1}: ${item[1]}`);
+// }
+
+// better way
+
+for (const [i, el] of menu2.entries()) {
+  console.log(`${i + 1}: ${el}`);
+}
