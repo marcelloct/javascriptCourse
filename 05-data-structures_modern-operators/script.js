@@ -1,6 +1,7 @@
 "use strict";
 ///////////////////////////////////////////////////////////////////
 // Destructuring Arrays
+console.log("---- Destructuring Arrays ----");
 
 const arr = [2, 3, 4];
 
@@ -49,6 +50,7 @@ console.log(p, q, r);
 
 ///////////////////////////////////////////////////////////////////
 // Destructuring Objects
+console.log("---- Destructuring Objects ----");
 
 const restaurant2 = {
   name: "Classico Italiano",
@@ -146,6 +148,7 @@ restaurant2.orderDelivery({
 
 ////////////////////////////////////////////////////////////////////
 // The Spread Operator (...)
+console.log("---- The Spread Operator (...) ----");
 
 // used to build new arrays or pass multiple values into a function
 // expand an array into individual elements
@@ -197,6 +200,7 @@ console.log(restaurant2.name);
 
 ////////////////////////////////////////////////////////////////////
 // Rest Pattern and Parameters
+console.log("---- Rest Pattern and Parameters ----");
 
 // used to collect multiple elements and condense then into an array
 
@@ -242,7 +246,8 @@ restaurant2.orderPizza("mushrooms", "onions", "olives", "spinach");
 restaurant2.orderPizza("mushrooms");
 
 ////////////////////////////////////////////////////////////////////////
-// Short Circuiting (&& and __)
+// Short Circuiting (&& and ||)
+console.log("---- Short Circuiting (&& and ||) ----");
 
 // Use ANY data type, return ANY data type, short-circuiting
 
@@ -283,7 +288,8 @@ restaurant2.orderPizza && restaurant2.orderPizza("mushrooms", "spinach");
 // and we can use the AND operator to execute code in the second operand if the first one is true
 
 ///////////////////////////////////////////////////////////////////
-// The Nullish Coalescing Operator (__)
+// The Nullish Coalescing Operator (??)
+console.log("---- The Nullish Coalescing Operator (??) ----");
 
 restaurant2.numGuestsNullish = 0;
 const guests3 = restaurant2.numGuestsNullish || 10;
@@ -296,6 +302,7 @@ console.log(guestCorrect);
 
 /////////////////////////////////////////////////////////////////////
 //  Looping Arrays The for-of Loop
+console.log("---- Looping Arrays The for-of Loop ----");
 
 const menu2 = [...restaurant2.starterMenu, ...restaurant2.mainMenu];
 
@@ -317,6 +324,7 @@ for (const [i, el] of menu2.entries()) {
 
 /////////////////////////////////////////////////////////////////////
 //  Enhanced Object Literals
+console.log("---- Enhanced Object Literals ----");
 
 const weekdaysEn = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 const openingHoursEn = {
@@ -374,6 +382,7 @@ console.log(restaurantEnhanced);
 
 ///////////////////////////////////////////////////////////////////////
 //  Optional Chaining (._)
+console.log("---- Optional Chaining (._) ----");
 
 // check if an property or method exist and if an array is empty, in case does not exist return undefined else than a error
 // tests if the value on the left does exists
@@ -402,3 +411,71 @@ console.log(restaurant2.orderRisotto?.(0, 1) ?? "Method does not exist");
 // Arrays
 const users = [{ name: "Jonas", email: "hi@gmail.com" }];
 console.log(users[0]?.name ?? "user array empty");
+
+///////////////////////////////////////////////////////////////////////
+// Looping Objects_ Object Keys, Values, and Entries
+console.log("---- Looping Objects_ Object Keys, Values, and Entries ----");
+
+// property names
+
+const properties = Object.keys(openingHours);
+console.log(properties);
+
+let openStr = `We are open ${properties.length} days: `;
+
+for (const day of properties) {
+  openStr += `${day}, `;
+}
+console.log(openStr);
+
+// property values
+const getValues = Object.values(openingHours);
+console.log(getValues);
+
+// entire object
+const entries = Object.entries(openingHours);
+console.log(entries);
+
+// [key,value]
+for (const [day, { open, close }] of entries) {
+  console.log(`On ${day} we open at ${open} and close at ${close}`);
+}
+
+////////////////////////////////////////////////////////////////////
+// Sets
+console.log("---- Sets ----");
+
+// collection of unique values
+// iterable
+
+const orderSet = new Set([
+  "Pizza",
+  "Pasta",
+  "Risotto",
+  "Pizza",
+  "Pizza",
+  "Risotto",
+]);
+console.log(orderSet);
+
+console.log(new Set("Jonas"));
+
+console.log(orderSet.size);
+console.log(orderSet.has("Pizza"));
+console.log(orderSet.has("Almondega"));
+orderSet.add("Garlic Bread");
+orderSet.delete("Risotto");
+// orderSet.clear()
+console.log(orderSet);
+
+for (const order of orderSet) console.log(order);
+
+// example
+const staff = ["Chef", "Waiter", "Chef", "Manager", "Waiter"];
+console.log(staff);
+const staffUnique = [...new Set(staff)];
+console.log(staffUnique);
+
+console.log(new Set(["Chef", "Waiter", "Chef", "Manager", "Waiter"]).size);
+
+console.log(new Set("jonasschimmidt").size);

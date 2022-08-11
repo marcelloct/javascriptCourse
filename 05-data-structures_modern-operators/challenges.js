@@ -80,6 +80,29 @@ team1 < team2 && console.log("Team 1 is more likely to win");
 team1 > team2 && console.log("Team 2 is more likely to win");
 
 console.log("-------- Challenge # 2 --------");
+// 1.
+// .entries() method for arrays
+for (const [i, player] of game.scored.entries()) {
+  console.log(`Goal ${i + 1}: ${player}`);
+}
+
+// 2.
+const oddValues = Object.values(game.odds);
+let oddSum = 0;
+for (let odd of oddValues) {
+  oddSum += odd;
+}
+const oddAverage = oddSum / oddValues.length;
+console.log(oddAverage);
+
+// 3.
+// .entries(object)  for objects
+for (const [team, odd] of Object.entries(game.odds)) {
+  // console.log(team, odd);
+  const teamStr = team === "x" ? "draw" : `victory ${game[team]}`;
+
+  console.log(`Odd of ${teamStr} : ${odd}`);
+}
 
 console.log("-------- Challenge # 3 --------");
 
