@@ -560,3 +560,210 @@ console.log(question.get(question.get("correct") === answer));
 console.log([...question]);
 console.log([...question.keys()]);
 console.log([...question.values()]);
+
+////////////////////////////////////////////////////////////////////////
+// Summary Which Data Structure to Use
+console.log("---- Summary Which Data Structure to Use ----");
+
+// data structures: arrays, objects, sets and maps
+
+// Sources of Data
+// 1) From the program itself: Data writen directly in source code (e.g. status messages)
+// 2) From the UI: Data input from the user or data written in DOM (e.g. tasks in todo app)
+// 3) From external sources: Data fetched for example from web API (e.g. recipe objects)
+
+// For simple lists: array or set
+// Needed key/value pair: objects or maps
+
+// Arrays VS. Sets
+
+// Array:
+// Use when you need ordered list of values (might contain duplicates)
+// Use when you need to manipulate data
+
+// Sets
+// Use when you need to work with unique values
+// Use when high-performance is really important
+// Use to remove duplicates from arrays
+
+// Objects VS. Maps
+
+// Objects:
+// More 'traditional' key/value store ('abused' objects)
+// Easier to write and access values with . and []
+// Use when you need to include functions (methods)
+// Use when working with JSON (can convert to map)
+
+// Maps:
+// Better performance
+// Keys can have any data type
+// Easy to iterate
+// Easy to compute size
+// Use when you simply need to map key to values
+// Use when you need keys that are not strings
+
+////////////////////////////////////////////////////////////////////////
+// Working With Strings - Part 1
+console.log("---- Working With Strings - Part 1 ----");
+
+const airline = "TAP Air Portugal";
+const plane = "A320";
+
+console.log(plane[0]);
+console.log("B737"[1]);
+
+console.log(airline.length);
+console.log("B737".length);
+
+console.log(airline.indexOf("r"));
+console.log(airline.lastIndexOf("r"));
+console.log(airline.indexOf("Portugal"));
+
+console.log(airline.slice(4));
+console.log(airline.slice(4, 7));
+
+console.log(airline.slice(0, airline.indexOf(" ")));
+console.log(airline.slice(airline.lastIndexOf(" ") + 1));
+
+console.log(airline.slice(-2));
+console.log(airline.slice(1, -1));
+
+const checkMiddleSeat = function (seat) {
+  // B and E are middle seats
+  const s = seat.slice(-1);
+  s === "B" || s === "E"
+    ? console.log("You got the middle seat")
+    : console.log("You got lucky");
+};
+
+checkMiddleSeat("11B");
+checkMiddleSeat("23C");
+checkMiddleSeat("3E");
+
+console.log(new String("Jonas")); // conversion that javascript does behind the scenes whenever we call a method on a string
+// when operation is done the object is converted back to a regular string primitive
+// all string methods return primitives
+console.log(typeof new String("Jonas")); // object
+console.log(typeof new String("Jonas").slice(1)); // string
+
+////////////////////////////////////////////////////////////////////////
+// Working With Strings - Part 2
+console.log("---- Working With Strings - Part 2 ----");
+
+console.log(airline.toLocaleLowerCase());
+console.log("jonas".toUpperCase());
+
+// Fix capitalization in name
+const passenger = "jOnAs";
+const passengerLower = passenger.toLowerCase(); // jonas
+const passengerCorrect =
+  passengerLower[0].toUpperCase() + passengerLower.slice(1); // J + onas
+console.log(passengerCorrect);
+
+const correctCapitalization = function (name) {
+  const lowerCase = name.toLowerCase();
+  const correct = lowerCase[0].toUpperCase() + lowerCase.slice(1);
+  console.log(correct);
+};
+
+correctCapitalization("jESSica");
+correctCapitalization("peteR");
+
+// Comparing emails
+const email = "hello@jonas.io";
+const loginEmail = " Hello@Jonas.Io \n";
+
+// const lowerEmail = loginEmail.toLowerCase();
+// const trimmedEmail = lowerEmail.trim();
+// console.log(trimmedEmail);
+
+const normalizedEmail = loginEmail.toLowerCase().trim();
+console.log(email === normalizedEmail);
+
+// replacing
+const priceGB = "288,97$";
+const priceUS = priceGB.replace("$", "R$").replace(",", ".");
+console.log(priceUS);
+
+const announcement =
+  "All passengers come to barding door 12. Boarding door 23!";
+console.log(announcement.replace("door", "gate"));
+console.log(announcement.replaceAll("door", "gate"));
+console.log(announcement.replace(/door/g, "gate")); // same result as replaceAll but with regex
+
+// Booleans
+const plane2 = "Airbus A320neo";
+console.log(plane2.includes("A320"));
+console.log(plane2.includes("Boeing"));
+
+console.log(plane2.startsWith("Air"));
+
+if (plane2.startsWith("Airbus") && plane2.endsWith("neo")) {
+  console.log("Part of the New Airbus family");
+}
+
+// Practice exercise
+const checkBaggage = function (items) {
+  const baggage = items.toLowerCase();
+  baggage.includes("knife") || baggage.includes("gun")
+    ? console.log("You are NOT allowed on board")
+    : console.log("Welcome aboard!");
+};
+
+checkBaggage("I have a laptop, some Food and a pocket knife");
+checkBaggage("Socks and camera");
+checkBaggage("Got some snacks and a gun for protection");
+
+////////////////////////////////////////////////////////////////////////
+// Working With Strings - Part 3
+console.log("---- Working With Strings - Part 3 ----");
+
+// split and join
+console.log("a+very+nice+string".split("+"));
+console.log("Jonas Schmedtmann".split(" "));
+
+const [firstName, lastName] = "Jonas Schmedtmann".split(" ");
+
+const newName = ["Mr.", firstName, lastName.toUpperCase()].join(" ");
+console.log(newName);
+
+const capitalizeName = function (name) {
+  const names = name.split(" ");
+  const namesUpper = [];
+
+  for (const n of names) {
+    // namesUpper.push(n[0].toUpperCase() + n.slice(1));
+    namesUpper.push(n.replace(n[0], n[0].toUpperCase()));
+  }
+  console.log(namesUpper.join(" "));
+};
+
+capitalizeName("jessica and smith davis");
+
+// Padding
+const message = "Go to gate 23";
+console.log(message.padStart(25, "+"));
+console.log("Jonas".padStart(25, "+"));
+
+console.log(message.padStart(25, "+").padEnd(30, "+"));
+
+// masking digits
+const maskCreditCard = function (number) {
+  const str = number + ""; // same as String(number)
+  const last = str.slice(-4);
+  return last.padStart(str.length, "*");
+};
+
+console.log(maskCreditCard(2345678923456789));
+console.log(maskCreditCard(8735069054));
+
+// repeat
+const message2 = "Bad weather... All deparures deplayed... ";
+console.log(message2.repeat(5));
+
+const planesInLine = function (n) {
+  console.log(`There are ${n} planes in line ${"✈".repeat(n)}`);
+};
+
+planesInLine(5);
+planesInLine(9);
