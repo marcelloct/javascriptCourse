@@ -479,3 +479,84 @@ console.log(staffUnique);
 console.log(new Set(["Chef", "Waiter", "Chef", "Manager", "Waiter"]).size);
 
 console.log(new Set("jonasschimmidt").size);
+
+////////////////////////////////////////////////////////////////////////
+// Maps Fundamentals
+console.log("---- Maps fundamentals ----");
+
+// used to map values to keys
+// different then objects, in maps, the keys can have any type
+
+const rest = new Map();
+console.log(rest);
+
+rest.set("name", "Classico Italiano");
+rest.set(1, "Italy");
+rest.set(2, "Portugal");
+
+rest
+  .set("categories", ["Italian", "Pizzeria", "Vegetarian", "Organic"])
+  .set("open", 11)
+  .set("close", 23)
+  .set(true, "We are open")
+  .set(false, "We are closed");
+
+console.log(rest);
+
+console.log(rest.get(true));
+
+const timeTest = 8;
+console.log(
+  rest.get(timeTest > rest.get("open") && timeTest < rest.get("close"))
+);
+
+console.log(rest.has("categories"));
+rest.delete(2);
+
+const arrTest = [1, 2];
+rest.set(arrTest, "Test");
+rest.set(document.querySelector("h1"), "Heading");
+console.log(rest);
+console.log(rest.size);
+// rest.clear()
+
+console.log(rest.get(arrTest));
+
+////////////////////////////////////////////////////////////////////////
+// Maps Iteration
+console.log("---- Maps Iteration ----");
+
+// other way to populating a map (best way than set)
+const question = new Map([
+  ["question", "What is the best language programming in the world?"],
+  [1, "C"],
+  [2, "Java"],
+  [3, "Javascript"],
+  ["correct", 3],
+  [true, "Correct"],
+  [false, "Try again"],
+]);
+console.log(question);
+
+// convert object to map
+console.log(Object.entries(openingHours));
+const hoursMap = new Map(Object.entries(openingHours));
+console.log(hoursMap);
+
+// Quiz app
+console.log(question.get("question"));
+for (const [key, value] of question) {
+  if (typeof key === "number") {
+    console.log(`Answer ${key}: ${value}`);
+  }
+}
+// const answer = Number(prompt("Your Answer"));
+const answer = 3;
+console.log(answer);
+
+console.log(question.get(question.get("correct") === answer));
+
+// convert map to array
+console.log([...question]);
+console.log([...question.keys()]);
+console.log([...question.values()]);
