@@ -142,3 +142,31 @@ for (const [min, event] of gameEvents) {
 }
 
 console.log("-------- Challenge # 4 --------");
+
+document.body.append(document.createElement("textarea"));
+document.body.append(document.createElement("button"));
+
+document.querySelector("button").addEventListener("click", function (string) {
+  const text = document.querySelector("textarea").value;
+  const rows = text.split("\n");
+  // const joinStrings = [
+  //   firstWord,
+  //   secondWord[0].toUpperCase() + secondWord.slice(1),
+  // ].join("");
+  // return joinStrings;
+  for (const [i, row] of rows.entries()) {
+    const [first, second] = row.toLowerCase().trim().split("_");
+    const output = `${first}${second.replace(
+      second[0],
+      second[0].toUpperCase()
+    )} `;
+    console.log(`${output.padEnd("20", " ")}${"✔".repeat(i + 1)}`);
+  }
+});
+
+// DATA for use
+// underscore_case
+// first_name
+// Some_Variable
+// calculate_AGE
+// delayed_departure
