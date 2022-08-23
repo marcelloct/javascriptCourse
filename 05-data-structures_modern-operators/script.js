@@ -137,13 +137,13 @@ console.log(open, close);
 // object as argument to a function
 restaurant2.orderDelivery({
   time: "22:30",
-  adress: "Via del Sole, 21",
+  address: "Via del Sole, 21",
   mainIndex: 2,
   starterIndex: 2,
 });
 
 restaurant2.orderDelivery({
-  adress: "Via del Sole, 21",
+  address: "Via del Sole, 21",
 });
 
 ////////////////////////////////////////////////////////////////////
