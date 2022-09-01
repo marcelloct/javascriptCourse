@@ -140,4 +140,146 @@ function high5() {
   console.log("✋");
 }
 
-document.body.addEventListener("click", high5);
+// document.body.addEventListener("click", high5);
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// Functions Returning Functions
+console.log("\n");
+console.log("---- Functions Returning Functions ----");
+
+const greet = function (greeting) {
+  return function (name) {
+    console.log(`${greeting} ${name}`);
+  };
+};
+
+const greeterHi = greet("Hi");
+greeterHi("Jonas");
+greeterHi("Peter");
+
+greet("Hello")("Jonas");
+
+const greetArrow = greeting => name => console.log(`${greeting} ${name}`);
+
+greetArrow("Hey")("Amanda");
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// The call and apply Methods
+console.log("\n");
+console.log("---- The call and apply Methods ----");
+
+// allow us to explicity define the this keyword in any function
+
+const lufthansa = {
+  airline: "Lufthansa",
+  iataCode: "LH",
+  bookings: [],
+  book(flightNum, name) {
+    console.log(
+      `${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`
+    );
+    this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
+  },
+};
+
+lufthansa.book(23, "Jonas Schmitt");
+console.log(lufthansa);
+
+const eurowings = {
+  airline: "Eurowings",
+  iataCode: "EW",
+  bookings: [],
+};
+
+const book = lufthansa.book;
+
+// Does NOT work
+// book(23, "James Bond");
+
+// Call Method
+book.call(eurowings, 21, "James Bond");
+console.log(eurowings);
+
+const swiss = {
+  airline: "Swiss",
+  iataCode: "SW",
+  bookings: [],
+};
+
+book.call(swiss, 300, "Amanda Seyfried");
+
+// Apply Method - NOT used in Modern Javascript
+const flightArr = [35, "Penelope Cruz"];
+book.apply(swiss, flightArr);
+
+// instead uses the spread operator on call method
+book.call(swiss, ...flightArr);
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// The bind Method
+console.log("\n");
+console.log("---- The bind Method ----");
+
+// like the call method, allow us to manually set this keywords for any function call
+// the difference is that bind, does not immediately call the function
+// instead it returns a new function where the this keyword is bound
+
+// return a function where this keyword will allways be set to Eurowings
+book.bind(eurowings);
+
+// first argument of bind is this keyword
+const bookEW = book.bind(eurowings);
+const bookLH = book.bind(lufthansa);
+const bookSW = book.bind(swiss);
+
+bookEW(100, "Peter Jackson");
+
+// set arguments in bind methods
+const bookEW23 = book.bind(eurowings, 23);
+bookEW23("Antonio Banderas");
+
+// With addEventListeners
+lufthansa.planes = 300;
+lufthansa.buyPlane = function () {
+  console.log(this);
+  this.planes++;
+  console.log(this.planes);
+};
+
+// lufthansa.buyPlane();
+
+document
+  .querySelector(".buy")
+  .addEventListener("click", lufthansa.buyPlane.bind(lufthansa));
+
+// Partial application (preset parameters)
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+
+// null is set, because don't have this keyword in use
+const addVAT = addTax.bind(null, 0.23); // addVAT = value => value + value * 0.23
+
+console.log(addVAT(200));
+
+// const greet = function (greeting) {
+//   return function (name) {
+//     console.log(`${greeting} ${name}`);
+//   };
+// };
+
+// const greeterHi = greet("Hi");
+// greeterHi("Jonas");
+// greeterHi("Peter");
+
+// Same as above with returning functions - Challenge
+const addTaxRate = function (rate) {
+  return function (value) {
+    return value + value * rate;
+  };
+};
+
+const addVAT2 = addTaxRate(0.23);
+console.log(addVAT2(200));
