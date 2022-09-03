@@ -318,3 +318,97 @@ document
 
 poll.displayResults.call({ answers: [5, 2, 3] }, "string");
 poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] });
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// Immediately Invoked Function Expressions (IIFE)
+console.log("\n");
+console.log("---- Immediately Invoked Function Expressions (IIFE) ----");
+
+// Used to execute a function just once
+
+(function () {
+  console.log("This will never run again!");
+})();
+
+(() => console.log("This will ALSO never run again!"))();
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// Closures
+console.log("\n");
+console.log("---- Closures ----");
+
+// We don't create closures manually, closure happens automatically
+
+// Closure makes a function remember all the variables that existed at the function's birthplace essentially
+
+// Any function always has access to the variable environment of the execution context in which the function was created
+
+// Closure: Variable environment (VE) to the function, exactly as it was at the time and place the function was created
+
+// Thanks to the closure a function does not lose connection to variables that existed at the function's birthplace
+
+// closure has priority over the scope chain
+
+const secureBooking = function () {
+  let passengerCount = 0;
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} passenger(s)`);
+  };
+};
+
+const booker = secureBooking();
+
+booker();
+booker();
+booker();
+
+console.dir(booker);
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// More Closure Examples
+console.log("\n");
+console.log("---- More Closure Examples ----");
+
+// Example 1
+let f;
+
+const g = function () {
+  const a = 22;
+  f = function () {
+    console.log(a * 2);
+  };
+};
+
+const h = function () {
+  const b = 777;
+  f = function () {
+    console.log(b * 2);
+  };
+};
+
+g();
+f();
+console.dir(f);
+
+// re-assigning f function
+h();
+f();
+console.dir(f);
+
+// Example 2
+const boardPassengers = function (n, wait) {
+  const perGroup = n / 3;
+
+  setTimeout(function () {
+    console.log(`We are now boarding all ${n}`);
+    console.log(`There are 3 groups, each with ${perGroup} passengers`);
+  }, wait * 1000);
+
+  console.log(`Will start boarding in ${wait} seconds`);
+};
+
+boardPassengers(180, 3);
