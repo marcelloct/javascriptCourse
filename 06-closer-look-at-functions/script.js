@@ -86,7 +86,7 @@ console.log("---- First-Class and Higher-Order Functions ----");
 // call methods on functions
 
 // Higher Order Functions
-// A functons that receives another function as an argument, that return a new function, or both
+// A functions that receives another function as an argument, that return a new function, or both
 // This is only possible because of first-class functions
 
 // addEventListener is an higher order function, that can be passed a function as callback
@@ -264,16 +264,6 @@ const addVAT = addTax.bind(null, 0.23); // addVAT = value => value + value * 0.2
 
 console.log(addVAT(200));
 
-// const greet = function (greeting) {
-//   return function (name) {
-//     console.log(`${greeting} ${name}`);
-//   };
-// };
-
-// const greeterHi = greet("Hi");
-// greeterHi("Jonas");
-// greeterHi("Peter");
-
 // Same as above with returning functions - Challenge
 const addTaxRate = function (rate) {
   return function (value) {
@@ -283,3 +273,48 @@ const addTaxRate = function (rate) {
 
 const addVAT2 = addTaxRate(0.23);
 console.log(addVAT2(200));
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// Challenge #1
+console.log("\n");
+console.log("---- Challenge #1 ----");
+
+const poll = {
+  question: "What is your favourite programming language?",
+  options: ["0: JavaScript", "1: Python", "2: Rust", "3: C++"],
+  // This generates [0, 0, 0, 0]. More in the next section!
+  answers: new Array(4).fill(0),
+  registerNewAnswer() {
+    // Get answer
+    const answer = Number(
+      prompt(
+        `${this.question}\n${this.options.join("\n")}\n(Write option number)`
+      )
+    );
+    console.log(answer);
+    // Register answer
+    typeof answer === "number" &&
+      answer < this.options.length &&
+      this.answers[answer]++;
+
+    this.displayResults();
+    this.displayResults("string");
+  },
+  displayResults(type = "array") {
+    if (type === "array") {
+      console.log(this.answers);
+    } else if (type === "string") {
+      console.log(`Poll results are ${this.answers.join(", ")}`);
+    }
+  },
+};
+
+// poll.registerNewAnswer();
+
+document
+  .querySelector(".poll")
+  .addEventListener("click", poll.registerNewAnswer.bind(poll));
+
+poll.displayResults.call({ answers: [5, 2, 3] }, "string");
+poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] });
