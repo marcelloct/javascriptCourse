@@ -412,3 +412,18 @@ const boardPassengers = function (n, wait) {
 };
 
 boardPassengers(180, 3);
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// Challenge #2
+console.log("\n");
+console.log("---- Challenge #2 ----");
+
+(function () {
+  const header = document.querySelector("h1");
+  header.style.color = "red";
+
+  document.querySelector("body").addEventListener("click", () => {
+    header.style.color = "blue";
+  });
+})();
