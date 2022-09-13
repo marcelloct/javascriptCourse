@@ -86,10 +86,34 @@ displayMovements(account1.movements);
 
 const calcPrintBalance = function (movements) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance} EUR`;
+  labelBalance.textContent = `${balance} €`;
 };
 
 calcPrintBalance(account1.movements);
+
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+
+  labelSumIn.textContent = `${incomes} €`;
+
+  const out = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `${Math.abs(out)} €`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * 1.2) / 100)
+    .filter((int, i, arr) => {
+      // console.log(arr);
+      return int >= 1;
+    })
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${interest} €`;
+};
+calcDisplaySummary(account1.movements);
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -320,3 +344,45 @@ const max = movements.reduce((acc, mov) => {
   else return mov;
 }, movements[0]);
 console.log(max);
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// Challenge #2
+console.log("\n");
+console.log("---- Challenge #2 ----");
+
+// convert dog ages to human
+// calculate the average age of all dogs
+
+const calclAverageHumanAge = function (ages) {
+  const humanAges = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
+  const adults = humanAges.filter(dog => dog >= 18);
+  const average = adults.reduce((acc, el) => acc + el, 0) / adults.length;
+  // console.log(humanAges, adults, average);
+  return average;
+};
+
+const avg1 = calclAverageHumanAge([1, 6, 9, 3, 11, 4]);
+const avg2 = calclAverageHumanAge([2, 8, 7, 1]);
+console.log(avg1, avg2);
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// The Magic of Chaining Methods
+console.log("\n");
+console.log("---- The Magic of Chaining Methods ----");
+
+const totalDepositsUSD = movements
+  .filter(mov => mov > 0)
+  // .map(mov => mov * eurToUSD)
+  .map((mov, i, arr) => {
+    // great use of arr for inspect the current array for possible issues in application
+    console.log(arr);
+    return mov * eurToUSD;
+  })
+  .reduce((acc, mov) => acc + mov, 0);
+
+console.log(totalDepositsUSD);
+
+// not overuse chaining, cause optimization problems
+// avoid mutating arrays, like using splice or reverse, in this type of chaining and in bigger applications
