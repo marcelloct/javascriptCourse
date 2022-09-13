@@ -386,3 +386,44 @@ console.log(totalDepositsUSD);
 
 // not overuse chaining, cause optimization problems
 // avoid mutating arrays, like using splice or reverse, in this type of chaining and in bigger applications
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// Challenge #3
+console.log("\n");
+console.log("---- Challenge #3 ----");
+
+const calcAvgHumanAgeChaining = ages =>
+  ages
+    .map(age => (age <= 2 ? 2 * age : 16 + age * 4))
+    .filter(age => age >= 18)
+    .reduce((acc, el, i, arr) => acc + el / arr.length, 0);
+
+const avg3 = calcAvgHumanAgeChaining([1, 6, 9, 3, 11, 4]);
+const avg4 = calcAvgHumanAgeChaining([2, 8, 7, 1]);
+console.log(avg3, avg4);
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// The find Method
+console.log("\n");
+console.log("---- The find Method ----");
+
+// used to retrieve one element of an array based on a condition
+// not return an Array, only return the first element based on the condition
+
+const firstWithdrawal = movements.find(mov => mov < 0);
+console.log(movements);
+console.log(firstWithdrawal);
+
+const account = accounts.find(acc => acc.owner === "Jessica Davis");
+console.log(account);
+
+// with for of
+for (const acc of accounts) {
+  if (acc.owner === "Jessica Davis") {
+    console.log(acc);
+  } else {
+    continue;
+  }
+}
