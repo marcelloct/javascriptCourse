@@ -74,7 +74,7 @@ const displayMovements = function (movements) {
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-        <div class="movements__value">${mov}</div>
+        <div class="movements__value">${`${mov} €`}</div>
       </div>`;
 
     containerMovements.insertAdjacentHTML("afterbegin", html);
@@ -198,6 +198,52 @@ btnTransfer.addEventListener("click", function (e) {
     // Update UI
     updateUI(currentAccount);
   }
+});
+
+btnLoan.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    // Add movement
+    currentAccount.movements.push(amount);
+
+    // Update UI
+    updateUI(currentAccount);
+  }
+
+  inputLoanAmount.value = "";
+});
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// The findindex Method
+
+// return the index of the element
+
+btnClose.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    const index = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    );
+    console.log(index);
+
+    // Delete account
+    accounts.splice(index, 1);
+
+    // Hide UI
+    containerApp.style.opacity = 0;
+  }
+
+  inputCloseUsername.value = inputClosePin.value = "";
+
+  labelWelcome.textContent = `Log in to get started`;
 });
 
 /////////////////////////////////////////////////
@@ -496,3 +542,59 @@ for (const acc of accounts) {
     continue;
   }
 }
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// some and every methods
+console.log("\n");
+console.log("---- some and every methods ----");
+
+console.log(movements.includes(-130)); // equality
+
+// some: condition
+const anyDeposits = movements.some(mov => mov > 0);
+console.log(anyDeposits);
+
+// every
+console.log(movements.every(mov => mov > 0));
+console.log(account4.movements.every(mov => mov > 0));
+
+// separate callback
+const dep = mov => mov > 0;
+console.log(movements.some(dep));
+console.log(movements.every(dep));
+console.log(movements.filter(dep));
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// flat and flatmap methods
+console.log("\n");
+console.log("---- flat and flatmap methods ----");
+
+const a = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(a.flat());
+
+const aDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(aDeep.flat());
+console.log(aDeep.flat(2));
+
+const accountMovements = accounts.map(acc => acc.movements);
+console.log(accountMovements);
+
+const allMovements = accountMovements.flat();
+console.log(allMovements);
+
+const overalBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
+console.log(overalBalance);
+
+// chaining
+const overalBalance2 = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overalBalance2);
+
+const overalBalance3 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overalBalance3);
