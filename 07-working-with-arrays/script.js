@@ -65,9 +65,12 @@ const inputClosePin = document.querySelector(".form__input--pin");
 ///////////////////////////////////////////////////////////////////
 // Creating DOM Elements
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = "";
-  movements.forEach(function (mov, i) {
+
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? "deposit" : "withdrawal";
     const html = `
       <div class="movements__row">
@@ -244,6 +247,14 @@ btnClose.addEventListener("click", function (e) {
   inputCloseUsername.value = inputClosePin.value = "";
 
   labelWelcome.textContent = `Log in to get started`;
+});
+
+let sorted = false;
+
+btnSort.addEventListener("click", function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
 });
 
 /////////////////////////////////////////////////
@@ -571,6 +582,8 @@ console.log(movements.filter(dep));
 console.log("\n");
 console.log("---- flat and flatmap methods ----");
 
+// use in nested arrays
+
 const a = [[1, 2, 3], [4, 5, 6], 7, 8];
 console.log(a.flat());
 
@@ -598,3 +611,77 @@ const overalBalance3 = accounts
   .flatMap(acc => acc.movements)
   .reduce((acc, mov) => acc + mov, 0);
 console.log(overalBalance3);
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// Sorting Arrays
+console.log("\n");
+console.log("---- Sorting Arrays ----");
+
+// strings
+const owners = ["Jonas", "Zack", "Adam", "Marta"];
+console.log(owners.sort()); // mutate the original array
+
+// numbers
+console.log(movements);
+
+// return < 0, a ,b (keep order)
+// return > 0, b, a (switch order)
+
+// ascending
+// movements.sort((a, b) => {
+//   // current and next value
+//   if (a > b) return 1;
+//   if (a < b) return -1;
+// });
+movements.sort((a, b) => a - b);
+console.log(movements);
+
+// descending
+// movements.sort((a, b) => {
+//   if (a > b) return -1;
+//   if (a < b) return 1;
+// });
+movements.sort((a, b) => b - a);
+console.log(movements);
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// More Ways of Creating and Filling Arrays
+console.log("\n");
+console.log("---- More Ways of Creating and Filling Arrays ----");
+
+const c = [1, 2, 3, 4, 5, 6, 7];
+
+// empty arrays + fill method
+const z = new Array(7);
+console.log(z);
+
+// z.fill(1);
+z.fill(1, 3, 5);
+console.log(z);
+
+c.fill(23, 2, 6);
+console.log(c);
+
+// array.from
+const d = Array.from({ length: 7 }, () => 1);
+console.log(d);
+
+const e = Array.from({ length: 7 }, (cur, i) => i + 1);
+console.log(e);
+
+// assignment exercise
+const dice = Array.from(
+  { length: 50 },
+  (_, i) => Math.trunc(Math.random() * 6) + 1
+);
+console.log(dice);
+
+labelBalance.addEventListener("click", function () {
+  const movementsUI = Array.from(
+    document.querySelectorAll(".movements__value"),
+    el => el.textContent.replace("€", "")
+  );
+  console.log(movementsUI);
+});
