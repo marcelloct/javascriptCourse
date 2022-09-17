@@ -685,3 +685,137 @@ labelBalance.addEventListener("click", function () {
   );
   console.log(movementsUI);
 });
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// Summary: Which Array Method to Use
+
+// ---------------- To Mutate Original Array
+
+// Add to original: .push (end), .unshift (start)
+// Remove from original: .pop (end), .shift (start), .splice (any)
+// Others: .reverse, .sort, .fill
+
+// ---------------- A New Array
+
+// Computed from original: .map (loop)
+// Filtered using condition: .filter
+// Portion of original: .slice
+// Adding original to other: .concat
+// Flatenning the original: .flat, .flatMap
+
+// ---------------- An Array index
+
+// Based on value: .indexOf
+// Based on test condition: .findIndex
+
+// ---------------- An Array Element
+
+// Based on test condition: .find
+
+// ---------------- Know if Array Includes
+
+// Based on value: .includes
+// Based on test condition: .some, .every
+
+// ---------------- A New String
+
+// Based on separator string: .join
+
+// ---------------- To Transform To Value
+
+// Based on accumulator: .reduce
+
+// Boil down array to single value of any type: number,string, boolean, or even new array or object
+
+// ---------------- To Just Loop Array
+
+// Based on callback: .forEach
+
+// Does not creat a new array, just loops over it
+// doesn't produce any new value, just do some work
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// Challenge #4
+console.log("\n");
+console.log("---- Challenge #4 ----");
+
+// studying if dogs are
+// eating too much or too little
+
+// too much = current food portion is larger than the recommended portion,
+// and eating too little = is the opposite.
+// ok amount = current food portion is within a range 10% above and 10% below the recommended portion
+
+const dogs = [
+  { weight: 22, curFood: 250, owners: ["Alice", "Bob"] },
+  { weight: 8, curFood: 200, owners: ["Matilda"] },
+  { weight: 13, curFood: 275, owners: ["Sarah", "John"] },
+  { weight: 32, curFood: 340, owners: ["Michael"] },
+];
+
+// 1)
+// calculate the recommended food portion
+// add it to the object as a new property.
+// Do not create a new array
+
+dogs.forEach(dog => (dog.recFood = Math.trunc(dog.weight ** 0.75 * 28)));
+
+console.log(dogs);
+
+// 2)
+// find Sarah
+// Sarah's dog eating too much or too little
+
+const dogSarah = dogs.find(dog => dog.owners.includes("Sarah"));
+
+console.log(dogSarah);
+console.log(
+  `Sarah's dog is eating ${
+    dogSarah.curFood > dogSarah.recFood ? "much" : "little"
+  }`
+);
+
+// 3)
+// Create an array containing all owners of dogs who eat too much - ownersEatTooMuch
+// and an array with all owners of dogs who eat too little - ownersEatTooLittle
+const ownersEatTooMuch = dogs
+  .filter(dog => dog.curFood > dog.recFood)
+  .flatMap(dog => dog.owners);
+// .flat()
+console.log(ownersEatTooMuch);
+
+const ownersEatTooLittle = dogs
+  .filter(dog => dog.curFood < dog.recFood)
+  .flatMap(dog => dog.owners);
+console.log(ownersEatTooLittle);
+
+// 4)
+
+console.log(`${ownersEatTooMuch.join(" and ")}'s dogs eat too much!`);
+console.log(`${ownersEatTooLittle.join(" and ")}'s dogs eat to little!`);
+
+// 5)
+
+console.log(dogs.some(dog => dog.curFood === dog.recFood));
+
+// 6)
+console.log(
+  dogs.some(
+    dog => dog.curFood > dog.recFood * 0.9 && dog.curFood < dog.recFood * 1.1
+  )
+);
+
+// 7)
+const checkEatingOkay = dog =>
+  dog.curFood > dog.recFood * 0.9 && dog.curFood < dog.recFood * 1.1;
+
+console.log(dogs.filter(checkEatingOkay));
+
+// 8)
+// Create a shallow copy of the 'dogs' array
+// sort it by recommended food portion in an ascending order
+
+const dogsSorted = dogs.slice().sort((a, b) => a.recFood - b.recFood);
+console.log(dogsSorted);
