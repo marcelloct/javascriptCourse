@@ -79,7 +79,7 @@ const message = document.createElement("div");
 message.classList.add("cookie-message");
 // message.textContent = 'We use cookies for improved funcionality and analytics'
 message.innerHTML =
-  'We use cookies for improved funcionality and analytics <button class="btn btn--close-cookie">Got it!</button>';
+  'We use cookies for improved funcionality and analytics. <button class="btn btn--close-cookie">Got it!</button>';
 
 // header.prepend(message);
 header.append(message);
@@ -105,7 +105,7 @@ console.log("---- Styles, Attributes and Classes ----");
 
 // Styles
 message.style.backgroundColor = "#37383d";
-message.style.width = "120%";
+// message.style.width = "120%";
 
 console.log(getComputedStyle(message).color);
 console.log(getComputedStyle(message).height);
@@ -113,7 +113,7 @@ console.log(getComputedStyle(message).height);
 message.style.height =
   Number.parseFloat(getComputedStyle(message).height, 10) + 30 + "px";
 
-document.documentElement.style.setProperty("--color-primary", "orangered");
+// document.documentElement.style.setProperty("--color-primary", "orangered");
 
 // Atributes
 const logo = document.querySelector(".nav__logo");
@@ -145,3 +145,104 @@ logo.classList.contains("c"); // not includes
 
 // Don't use
 logo.className = "jonas";
+
+//////////////////////////////////////////////////
+/////////////////////////////////////////////////
+// Implementing Smooth Scrolling
+
+console.log("\n");
+console.log("---- Implementing Smooth Scrolling ----");
+
+const btnScrollTo = document.querySelector(".btn--scroll-to");
+const section1 = document.querySelector("#section--1");
+
+btnScrollTo.addEventListener("click", function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  console.log(s1coords);
+
+  console.log(e.target.getBoundingClientRect());
+
+  console.log("Current scroll(X/Y)", window.pageXOffset, window.pageYOffset);
+
+  console.log(
+    "height/width viewport",
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  );
+
+  // Scrolling
+
+  // Old Way
+
+  // window.scrollTo(
+  //   s1coords.left + window.pageXOffset,
+  //   s1coords.top + window.pageYOffset
+  // );
+
+  // window.scrollTo({
+  //   left: s1coords.left + window.pageXOffset,
+  //   top: s1coords.top + window.pageYOffset,
+  //   behavior: "smooth",
+  // });
+
+  // Modern Way
+
+  section1.scrollIntoView({ behavior: "smooth" });
+});
+
+//////////////////////////////////////////////////
+/////////////////////////////////////////////////
+// Types of Events and Event Handlers
+
+console.log("\n");
+console.log("---- Types of Events and Event Handlers ----");
+
+const h1 = document.querySelector("h1");
+
+const alertH1 = function (e) {
+  alert("addEventListener: Great! You are reading the heading :D");
+
+  // h1.removeEventListener("mouseenter", alertH1)
+};
+
+h1.addEventListener("mouseenter", alertH1);
+
+setTimeout(() => h1.removeEventListener("mouseenter", alertH1), 3000);
+
+// Old Way
+
+// h1.onmouseenter = function (e) {
+//   alert("addEventListener: Great! You are reading the heading ");
+// };
+
+//////////////////////////////////////////////////
+/////////////////////////////////////////////////
+// Event Propagation in Practice
+
+console.log("\n");
+console.log("---- Event Propagation in Practice ----");
+
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+console.log(randomColor(0, 255));
+
+document.querySelector(".nav__link").addEventListener("click", function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log("LINK", e.target, e.currentTarget);
+
+  // Stop propagation
+  // Generally not used
+  // e.stopPropagation();
+});
+
+document.querySelector(".nav__links").addEventListener("click", function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log("Container", e.target, e.currentTarget);
+});
+
+document.querySelector(".nav").addEventListener("click", function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log("Nav", e.target, e.currentTarget);
+});
