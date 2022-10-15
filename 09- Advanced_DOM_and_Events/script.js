@@ -33,6 +33,65 @@ document.addEventListener("keydown", function (e) {
   }
 });
 
+//////////////////////////////////////////////////
+/////////////////////////////////////////////////
+// Event Delegation - Page Navigation
+
+// document.querySelectorAll(".nav__link").forEach(function (el) {
+//   el.addEventListener("click", function (e) {
+//     e.preventDefault();
+//     const id = this.getAttribute("href");
+//     console.log(id);
+//     document.querySelector(id).scrollIntoView({ behavior: "smooth" });
+//   });
+// });
+
+// 1. Add event listener to common parent element
+// 2. Determine what element originated the event
+
+document.querySelector(".nav__links").addEventListener("click", function (e) {
+  // console.log(e.target);
+  e.preventDefault();
+
+  // Matching strategy
+  if (e.target.classList.contains("nav__link")) {
+    // console.log("LINK");
+
+    const id = e.target.getAttribute("href");
+    console.log(id);
+    document.querySelector(id).scrollIntoView({ behavior: "smooth" });
+  }
+});
+
+//////////////////////////////////////////////////
+/////////////////////////////////////////////////
+// Building a Tabbed Component
+
+const tabs = document.querySelectorAll(".operations__tab");
+const tabsContainer = document.querySelector(".operations__tab-container");
+const tabsContent = document.querySelectorAll(".operations__content");
+
+tabsContainer.addEventListener("click", function (e) {
+  const clicked = e.target.closest(".operations__tab");
+  console.log(clicked);
+
+  // Guard clause
+  if (!clicked) return;
+
+  // remove active classes
+  tabs.forEach(t => t.classList.remove("operations__tab--active"));
+  tabsContent.forEach(c => c.classList.remove("operations__content--active"));
+
+  // Active tab
+  clicked.classList.add("operations__tab--active");
+
+  // Active content area
+  console.log(clicked.dataset.tab);
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add("operations__content--active");
+});
+
 ///////////////////////////////////////////////////////////////
 // How the DOM really works
 
@@ -148,7 +207,7 @@ logo.className = "jonas";
 
 //////////////////////////////////////////////////
 /////////////////////////////////////////////////
-// Implementing Smooth Scrolling
+// Implementing Smooth Scrolling - Button Scrolling
 
 console.log("\n");
 console.log("---- Implementing Smooth Scrolling ----");
@@ -228,21 +287,56 @@ const randomColor = () =>
   `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
 console.log(randomColor(0, 255));
 
-document.querySelector(".nav__link").addEventListener("click", function (e) {
-  this.style.backgroundColor = randomColor();
-  console.log("LINK", e.target, e.currentTarget);
+// document.querySelector(".nav__link").addEventListener("click", function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log("LINK", e.target, e.currentTarget);
 
-  // Stop propagation
-  // Generally not used
-  // e.stopPropagation();
-});
+//   //// Stop propagation
+//   //// Generally not used
+//   //// e.stopPropagation();
+// });
 
-document.querySelector(".nav__links").addEventListener("click", function (e) {
-  this.style.backgroundColor = randomColor();
-  console.log("Container", e.target, e.currentTarget);
-});
+// document.querySelector(".nav__links").addEventListener("click", function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log("Container", e.target, e.currentTarget);
+// });
 
-document.querySelector(".nav").addEventListener("click", function (e) {
-  this.style.backgroundColor = randomColor();
-  console.log("Nav", e.target, e.currentTarget);
-});
+// document.querySelector(".nav").addEventListener("click", function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log("Nav", e.target, e.currentTarget);
+// });
+
+//////////////////////////////////////////////////
+/////////////////////////////////////////////////
+// DOM Traversing
+
+console.log("\n");
+console.log("---- DOM Traversing ----");
+
+// Going downwards: child
+console.log(h1.querySelectorAll(".highlight"));
+console.log(h1.childNodes);
+console.log(h1.children);
+h1.firstElementChild.style.color = "white";
+h1.lastElementChild.style.color = "white";
+
+// Going upwards: parents
+console.log(h1.parentNode);
+console.log(h1.parentElement);
+
+// IMPORTANT ONE, especially for event delegation
+// h1.closest(".header").style.background = "var(--gradient-secondary)";
+
+// h1.closest("h1").style.background = "var(--gradient-primary)";
+
+// Going sideways: siblings
+console.log(h1.previousElementSibling);
+console.log(h1.nextElementSibling);
+
+console.log(h1.previousSibling);
+console.log(h1.nextSibling);
+
+console.log(h1.parentElement.children);
+// [...h1.parentElement.children].forEach(function (el) {
+//   if (el !== h1) el.style.transform = "scale(0.5)";
+// });
