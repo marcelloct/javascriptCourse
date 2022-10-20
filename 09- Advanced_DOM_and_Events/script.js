@@ -8,6 +8,15 @@ const overlay = document.querySelector(".overlay");
 const btnCloseModal = document.querySelector(".btn--close-modal");
 const btnsOpenModal = document.querySelectorAll(".btn--show-modal");
 const nav = document.querySelector(".nav");
+const section1 = document.querySelector("#section--1");
+const header = document.querySelector(".header");
+
+const tabs = document.querySelectorAll(".operations__tab");
+const tabsContainer = document.querySelector(".operations__tab-container");
+const tabsContent = document.querySelectorAll(".operations__content");
+
+const btnScrollTo = document.querySelector(".btn--scroll-to");
+const h1 = document.querySelector("h1");
 
 const openModal = function (e) {
   e.preventDefault();
@@ -68,10 +77,6 @@ document.querySelector(".nav__links").addEventListener("click", function (e) {
 /////////////////////////////////////////////////
 // Building a Tabbed Component
 
-const tabs = document.querySelectorAll(".operations__tab");
-const tabsContainer = document.querySelector(".operations__tab-container");
-const tabsContent = document.querySelectorAll(".operations__content");
-
 tabsContainer.addEventListener("click", function (e) {
   const clicked = e.target.closest(".operations__tab");
   console.log(clicked);
@@ -118,6 +123,51 @@ nav.addEventListener("mouseout", handleHover.bind(1));
 //////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // Implementing a Sticky Navigation - The Scroll Event
+// const initialCoords = document
+//   .querySelector("#section--1")
+//   .getBoundingClientRect();
+// console.log(initialCoords);
+
+// // Scroll Event is not really efficient and usually it should be avoided
+// window.addEventListener("scroll", function () {
+//   // console.log(window.scrollY);
+//   if (window.scrollY > initialCoords.top) nav.classList.add("sticky");
+//   else nav.classList.remove("sticky");
+// });
+
+// A Better Way - The Intersection Observer API
+
+const obsCallback = function (entries, observer) {
+  //called each time that the observed element, is intersecting the root element at the threshold that we defined
+  entries.forEach(entry => {
+    // console.log(entry);
+  });
+};
+
+const obsOptions = {
+  root: null,
+  threshold: [0, 0.2],
+};
+
+const observer = new IntersectionObserver(obsCallback, obsOptions);
+observer.observe(section1);
+
+// in practice
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  console.log(entry);
+  if (!entry.isIntersecting) nav.classList.add("sticky");
+  else nav.classList.remove("sticky");
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null, // entire viewport
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+});
+headerObserver.observe(header);
 
 //////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -154,7 +204,6 @@ console.log(document.documentElement);
 console.log(document.head);
 console.log(document.body);
 
-const header = document.querySelector(".header");
 const allSections = document.querySelectorAll(".section");
 console.log(allSections);
 
@@ -245,9 +294,6 @@ logo.className = "jonas";
 console.log("\n");
 console.log("---- Implementing Smooth Scrolling ----");
 
-const btnScrollTo = document.querySelector(".btn--scroll-to");
-const section1 = document.querySelector("#section--1");
-
 btnScrollTo.addEventListener("click", function (e) {
   const s1coords = section1.getBoundingClientRect();
   console.log(s1coords);
@@ -288,8 +334,6 @@ btnScrollTo.addEventListener("click", function (e) {
 
 console.log("\n");
 console.log("---- Types of Events and Event Handlers ----");
-
-const h1 = document.querySelector("h1");
 
 const alertH1 = function (e) {
   alert("addEventListener: Great! You are reading the heading :D");
