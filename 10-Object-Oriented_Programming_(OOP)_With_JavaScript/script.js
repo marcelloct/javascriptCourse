@@ -69,3 +69,114 @@ console.log(jonas);
 // own properties are only the ones that are declared directly on the object itself, not including the inherited properties
 console.log(jonas.hasOwnProperty("firstName"));
 console.log(jonas.hasOwnProperty("species"));
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Prototypal Inheritance and The Prototype Chain
+
+console.log("\n");
+console.log("---- Prototypal Inheritance and The Prototype Chain ----");
+
+console.log(jonas.__proto__);
+// Object.prototype (top of prototype chain)
+console.log(jonas.__proto__.__proto__);
+console.log(jonas.__proto__.__proto__.__proto__);
+
+console.dir(Person.prototype.constructor);
+
+const arr = [3, 4, 4, 5, 6, 8, 8]; // new Array === []
+console.log(arr.__proto__);
+console.log(arr.__proto__ == Array.prototype);
+
+console.log(arr.__proto__.__proto__);
+
+// added a new method to the prototype property of the array constructor
+// all arrays inherited this method
+// avoid use this, because Javascript might add a method with the same name
+Array.prototype.unique = function () {
+  return [...new Set(this)];
+};
+
+console.log(arr.unique());
+
+const h1 = document.querySelector("h1");
+console.dir(h1);
+console.dir(x => x + 1);
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Challenge #1
+
+console.log("\n");
+console.log("---- Challenge #1 ----");
+
+// 1.
+const Car = function (make, speed) {
+  this.make = make;
+  this.speed = speed;
+};
+
+const bmw = new Car("BMW", 120);
+const mercedes = new Car("Mercedes", 95);
+
+console.log(bmw, mercedes);
+
+// 2.
+Car.prototype.accelerate = function () {
+  this.speed += 10;
+  console.log(`${this.make} is going at ${this.speed} Km/h`);
+};
+
+// 3.
+Car.prototype.brake = function () {
+  this.speed -= 5;
+  console.log(`${this.make} is going at ${this.speed} Km/h`);
+};
+
+// 4.
+bmw.accelerate();
+mercedes.accelerate();
+bmw.brake();
+mercedes.brake();
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// ES6 Classes
+
+console.log("\n");
+console.log("---- ES6 Classes ----");
+
+// Modern syntax
+
+// class expression
+// const PersonCl = class {}
+
+// class declaration
+
+class PersonCl {
+  constructor(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
+
+  // Method will be added to .prototype property
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  }
+}
+
+const jessica = new PersonCl("Jessica", 1996);
+console.log(jessica);
+jessica.calcAge();
+
+console.log(jessica.__proto__ === PersonCl.prototype);
+
+PersonCl.prototype.greet = function () {
+  console.log(`Hey ${this.firstName}`);
+};
+
+jessica.greet();
+
+// 1. Classes are NOT hoisted
+// 2. Classes are first-class citizes
+// 3. Classes are executed in strict mode
