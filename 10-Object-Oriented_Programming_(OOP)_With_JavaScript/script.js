@@ -154,25 +154,47 @@ console.log("---- ES6 Classes ----");
 // class declaration
 
 class PersonCl {
-  constructor(firstName, birthYear) {
-    this.firstName = firstName;
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
     this.birthYear = birthYear;
   }
 
+  // Instance Methods
   // Method will be added to .prototype property
   calcAge() {
     console.log(2037 - this.birthYear);
   }
+
+  get age() {
+    return 2037 - this.birthYear;
+  }
+
+  // Set a property that already exists
+  set fullName(name) {
+    console.log(name);
+    if (name.includes(" ")) this._fullName = name;
+    else alert(`${name} is not a full name!`);
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
+
+  // static Method
+  static hey() {
+    console.log("Hey there ✌");
+  }
 }
 
-const jessica = new PersonCl("Jessica", 1996);
+const jessica = new PersonCl("Jessica Davis", 1996);
 console.log(jessica);
 jessica.calcAge();
+console.log(jessica.age);
 
 console.log(jessica.__proto__ === PersonCl.prototype);
 
 PersonCl.prototype.greet = function () {
-  console.log(`Hey ${this.firstName}`);
+  console.log(`Hey ${this.fullName}`);
 };
 
 jessica.greet();
@@ -180,3 +202,205 @@ jessica.greet();
 // 1. Classes are NOT hoisted
 // 2. Classes are first-class citizes
 // 3. Classes are executed in strict mode
+
+// const walter = new PersonCl("Walter", 1965);
+
+PersonCl.hey();
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Setters and Getters
+
+console.log("\n");
+console.log("---- Setters and Getters ----");
+
+// Getters and setters are basically functions that get and set a value
+// Can be used in any object
+// used too for data validations
+
+const account = {
+  owner: "Jonas",
+  movements: [200, 530, 120, 300],
+
+  get latest() {
+    return this.movements.slice(-1).pop();
+  },
+
+  set latest(mov) {
+    this.movements.push(mov);
+  },
+};
+
+console.log(account.latest);
+
+account.latest = 50;
+console.log(account.movements);
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Static Methods
+
+console.log("\n");
+console.log("---- Static Methods ----");
+
+// Methods that are available/attached to the entire constructor (e.g: Array.from() Number.parseFloat()) and not to the prototype property of the constructor (e.g: [1,2,3].from() 12.parseFloat())
+console.log(Array.from(document.querySelectorAll("h1")));
+console.log(Number.parseFloat(12));
+
+Person.hey = function () {
+  console.log("Hey there ✌");
+  // console.log(this);
+};
+
+Person.hey();
+// jonas.hey(); // Not inhereted
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Object create
+
+console.log("\n");
+console.log("---- Object create ----");
+
+// Object create creates a new object and the prototype of that object will be the object that we passed in
+
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steven = Object.create(PersonProto);
+console.log(steven);
+steven.name = "Steven";
+steven.birthYear = 2002;
+steven.calcAge();
+
+console.log(steven.__proto__ === PersonProto);
+
+const sarah = Object.create(PersonProto);
+sarah.init("Sarah", 1979);
+sarah.calcAge();
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Challenge #2
+
+console.log("\n");
+console.log("---- Challenge #2 ----");
+
+class CarCl {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+
+  accelerate() {
+    this.speed += 10;
+    console.log(`${this.make} is going at ${this.speed} Km/h`);
+  }
+
+  brake() {
+    this.speed -= 5;
+    console.log(`${this.make} is going at ${this.speed} Km/h`);
+  }
+
+  get speedUS() {
+    return this.speed / 1.6;
+  }
+
+  set speedUS(speed) {
+    this.speed = speed * 1.6;
+  }
+}
+
+const ford = new CarCl("Ford", 120);
+
+console.log(ford);
+
+console.log(ford.speedUS);
+
+ford.speedUS = 50;
+console.log(ford);
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Inheritance Between Classes Constructor Functions
+
+console.log("\n");
+console.log("---- Inheritance Between Classes Constructor Functions ----");
+
+const PersonIn = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+
+PersonIn.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+};
+
+const Student = function (firstName, birthYear, course) {
+  Person.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+// Linking prototypes
+Student.prototype = Object.create(PersonIn.prototype);
+
+Student.prototype.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const mike = new Student("Mike", 2020, "Computer Science");
+console.log(mike);
+mike.introduce();
+mike.calcAge();
+
+console.log(mike.__proto__);
+console.log(mike.__proto__.__proto__);
+
+console.log(mike instanceof Student);
+console.log(mike instanceof PersonIn);
+
+console.dir(Student.prototype.constructor);
+Student.prototype.constructor = Student;
+console.dir(Student.prototype.constructor);
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Challenge #3
+
+console.log("\n");
+console.log("---- Challenge #3 ----");
+
+const EV = function (make, speed, charge) {
+  Car.call(this, make, speed);
+  this.charge = charge;
+};
+
+EV.prototype = Object.create(Car.prototype);
+
+const tesla = new EV("Tesla", 120, 23);
+console.log(tesla);
+
+EV.prototype.chargeBattery = function (chargeTo) {
+  this.charge = chargeTo;
+};
+
+EV.prototype.accelerate = function () {
+  this.speed += 20;
+  this.charge--;
+  console.log(
+    `${this.make} going at ${this.speed} km/h, with a charge of ${this.charge}%`
+  );
+};
+
+tesla.accelerate();
+
+tesla.chargeBattery(90);
+console.log(tesla);
