@@ -330,7 +330,7 @@ console.log(ford);
 
 ///////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
-// Inheritance Between Classes Constructor Functions
+// Inheritance Between Classes - Constructor Functions
 
 console.log("\n");
 console.log("---- Inheritance Between Classes Constructor Functions ----");
@@ -404,3 +404,165 @@ tesla.accelerate();
 
 tesla.chargeBattery(90);
 console.log(tesla);
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Inheritance Between Classes - ES6 Classes
+
+console.log("\n");
+console.log("---- Inheritance Between Classes - ES6 Classes ----");
+
+class PersonClIn {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  }
+
+  get age() {
+    return 2037 - this.birthYear;
+  }
+
+  set fullName(name) {
+    console.log(name);
+    if (name.includes(" ")) this._fullName = name;
+    else alert(`${name} is not a full name!`);
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
+
+  static hey() {
+    console.log("Hey there ✌");
+  }
+}
+
+class StudentCl extends PersonClIn {
+  constructor(fullName, birthYear, course) {
+    // Always needs to happen first!
+    super(fullName, birthYear);
+    this.course = course;
+  }
+
+  introduce() {
+    console.log(`My name is ${this.fullName} and I study ${this.course}`);
+  }
+
+  calcAge() {
+    console.log(
+      `I'm ${
+        2037 - this.birthYear
+      } years old, but as a student I feel more like ${
+        2037 - this.birthYear + 10
+      }`
+    );
+  }
+}
+
+const martha = new StudentCl("Martha Jones", 2012, "Computer Science");
+martha.introduce();
+martha.calcAge();
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Inheritance Between Classes - Object.create
+
+console.log("\n");
+console.log("---- Inheritance Between Classes - Object.create ----");
+
+const PersonProto2 = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const StudentProto = Object.create(PersonProto2);
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto2.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+StudentProto.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const jay = Object.create(StudentProto);
+jay.init("Jay", 2010, "computer Science");
+jay.introduce();
+jay.calcAge();
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Another Class Example
+
+console.log("\n");
+console.log("---- Another Class Example ----");
+
+class Account {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    // Protected property
+    this._pin = pin;
+    this._movements = [];
+    this.locale = navigator.language;
+
+    console.log(`Thanks for opening an account, ${owner}`);
+  }
+
+  // Public interface
+  getMovements() {
+    return this._movements;
+  }
+
+  deposit(val) {
+    this._movements.push(val);
+  }
+
+  withdraw(val) {
+    this.deposit(-val);
+  }
+
+  _approveLoan(val) {
+    return true;
+  }
+
+  requestLoan(val) {
+    if (this._approveLoan(val)) {
+      this.deposit(val);
+      console.log(`Loan Approved`);
+    }
+  }
+}
+
+const acc1 = new Account("Jonas", "EUR", 1111);
+
+// acc1.movements.push(250)
+// acc1.movements.push(-140)
+acc1.deposit(250);
+acc1.withdraw(140);
+acc1.requestLoan(1000);
+// acc1.approveLoan(1000);
+console.log(acc1);
+console.log(acc1.getMovements());
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Encapsulation - Protected Properties and Methods
+
+console.log("\n");
+console.log("---- Encapsulation - Protected Properties and Methods ----");
+
+// Prevent code from outside of a class to accidentally manipulate our data inside the class
+// Fake private
+
+// _property (see examples above)
