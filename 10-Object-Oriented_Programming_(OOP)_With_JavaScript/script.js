@@ -611,3 +611,50 @@ console.log("---- Chaining Methods ----");
 
 acc1.deposit(300).deposit(500).withdraw(35).requestLoan(25000).withdraw(4000);
 console.log(acc1.getMovements());
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Challenge #4
+
+console.log("\n");
+console.log("---- Challenge #4 ----");
+
+class EVCl extends CarCl {
+  #charge;
+  constructor(make, speed, charge) {
+    super(make, speed);
+    this.#charge = charge;
+  }
+
+  chargeBattery(chargeTo) {
+    this.#charge = chargeTo;
+    return this;
+  }
+
+  accelerate() {
+    this.speed += 20;
+    this.#charge--;
+    console.log(
+      `${this.make} going at ${this.speed} km/h, with a charge of ${
+        this.#charge
+      }%`
+    );
+    return this; // necessary for chaining methods
+  }
+
+  brake() {
+    this.speed -= 5;
+    console.log(`${this.make} going at ${this.speed} km/h`);
+    return this;
+  }
+}
+
+const rivian = new EVCl("Rivian", 120, 23);
+
+console.log(rivian);
+
+rivian.chargeBattery(90).accelerate().brake().accelerate();
+
+console.log(rivian);
+
+console.log(rivian.speedUS);
