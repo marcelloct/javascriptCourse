@@ -23,7 +23,12 @@ const renderCountry = function (data, className = '') {
   `;
 
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  countriesContainer.style.opacity = 1;
+  // countriesContainer.style.opacity = 1;
+};
+
+const renderError = function (msg) {
+  countriesContainer.insertAdjacentText('beforeend', msg);
+  // countriesContainer.style.opacity = 1;
 };
 ///////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
@@ -166,4 +171,59 @@ const getCountryDataChaining = function (country) {
     .then(data => renderCountry(data, 'neighbour'));
 };
 
-getCountryDataChaining('portugal');
+// getCountryDataChaining('portugal');
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Handling Rejected Promises
+
+console.log('\n');
+console.log('---- Handling Rejected Promises ----');
+
+const getJSON = function (url, errorMsg = 'Something went wrong') {
+  return fetch(url).then(response => {
+    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+    return response.json();
+  });
+};
+
+const getCountryDataRej = function (country) {
+  // country 1
+  fetch(`https://restcountries.com/v2/name/${country}`)
+    .then(response => {
+      console.log(response);
+      if (!response.ok) throw new Error(`Country not found ${response.status}`);
+      return response.json();
+    })
+    .then(data => {
+      renderCountry(data[0]);
+      const neighbour = data[0].borders[0];
+
+      if (!neighbour) return;
+
+      // country 2
+      return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
+    })
+    .then(response => {
+      if (!response.ok) throw new Error(`Country not found ${response.status}`);
+
+      return response.json();
+    })
+    .then(data => renderCountry(data, 'neighbour')) // then - called when promise is fulfilled
+    .catch(err => {
+      // catch - called when promise is rejected
+      console.error(`${err} `);
+      renderError(`Something went wrong ${err.message}. Try again!`);
+    })
+    .finally(() => {
+      // finally - is gonna be called always. e.g: hide loading spinners
+      countriesContainer.style.opacity = 1;
+    });
+};
+
+// for simulate an error, in network tab on inspection, set offline and click the button
+
+btn.addEventListener('click', function () {
+  getCountryDataRej('portugal');
+});
+getCountryDataRej('sfgsgse');
