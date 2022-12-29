@@ -189,25 +189,18 @@ const getJSON = function (url, errorMsg = 'Something went wrong') {
 
 const getCountryDataRej = function (country) {
   // country 1
-  fetch(`https://restcountries.com/v2/name/${country}`)
-    .then(response => {
-      console.log(response);
-      if (!response.ok) throw new Error(`Country not found ${response.status}`);
-      return response.json();
-    })
+  getJSON(`https://restcountries.com/v2/name/${country}`, 'Country not found')
     .then(data => {
       renderCountry(data[0]);
       const neighbour = data[0].borders[0];
-
-      if (!neighbour) return;
+      console.log(neighbour);
+      if (!neighbour) throw new Error('No neighbour found!');
 
       // country 2
-      return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
-    })
-    .then(response => {
-      if (!response.ok) throw new Error(`Country not found ${response.status}`);
-
-      return response.json();
+      return getJSON(
+        `https://restcountries.com/v2/alpha/${neighbour}`,
+        'Country not found'
+      );
     })
     .then(data => renderCountry(data, 'neighbour')) // then - called when promise is fulfilled
     .catch(err => {
@@ -226,4 +219,5 @@ const getCountryDataRej = function (country) {
 btn.addEventListener('click', function () {
   getCountryDataRej('portugal');
 });
-getCountryDataRej('sfgsgse');
+// getCountryDataRej('sfgsgse');
+getCountryDataRej('australia');
