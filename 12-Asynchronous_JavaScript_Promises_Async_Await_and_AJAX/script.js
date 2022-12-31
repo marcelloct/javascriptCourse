@@ -257,6 +257,23 @@ const whereAmI = function (lat, lng) {
     });
 };
 
-whereAmI(19.037, 72.873);
-whereAmI(52.508, 13.381);
-whereAmI(-33.933, 18.474);
+// whereAmI(19.037, 72.873);
+// whereAmI(52.508, 13.381);
+// whereAmI(-33.933, 18.474);
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// The Event loop in practice
+
+console.log('\n');
+console.log('---- The Event loop in practice ----');
+
+console.log('Test start');
+setTimeout(() => console.log('0 sec timer'), 0);
+Promise.resolve('Resolved promise 1') // create a promisse that is immediately resolved
+  .then(res => console.log(res));
+Promise.resolve('Resolved promise 2').then(res => {
+  for (let i = 0; i < 1000000000; i++) {}
+  console.log(res);
+});
+console.log('Test end');
