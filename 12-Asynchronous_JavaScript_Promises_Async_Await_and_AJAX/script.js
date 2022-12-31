@@ -71,6 +71,19 @@ const getCountryData = function (country) {
 console.log('\n');
 console.log('---- Callback Hell ----');
 
+// setTimeout(() => {
+//     console.log('1 sec passed');
+//     setTimeout(() => {
+//       console.log('2 sec passed');
+//       setTimeout(() => {
+//         console.log('3 sec passed');
+//         setTimeout(() => {
+//           console.log('4 sec passed');
+//         },1000);
+//       },1000);
+//     },1000);
+//   },1000);
+
 const getCountryandNeighbour = function (country) {
   // AJAX call country 1
   const request = new XMLHttpRequest();
@@ -277,3 +290,51 @@ Promise.resolve('Resolved promise 2').then(res => {
   console.log(res);
 });
 console.log('Test end');
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Building a simple promise
+
+console.log('\n');
+console.log('---- Building a simple promise ----');
+
+// promise constructor
+const lotteryPromise = new Promise(function (resolve, reject) {
+  // executor function
+
+  console.log(`Lotter draw is happening:`);
+
+  setTimeout(function () {
+    if (Math.random() >= 0.5) {
+      resolve(`You win`); // fullfiled
+    } else {
+      reject(new Error(`You Lost`)); // rejected
+    }
+  }, 2000);
+});
+
+lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+
+// Promisifying setTimeout
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+wait(3)
+  .then(() => {
+    console.log(`1 second(s) passed`);
+    return wait(1);
+  })
+  .then(() => {
+    console.log(`2 second(s) passed`);
+    return wait(1);
+  })
+  .then(() => {
+    console.log(`3 second(s) passed`);
+    return wait(1);
+  });
+
+Promise.resolve('abc').then(x => console.log(x));
+Promise.reject(new Error('Problem!')).catch(x => console.error(x)); // reject promise immediately
