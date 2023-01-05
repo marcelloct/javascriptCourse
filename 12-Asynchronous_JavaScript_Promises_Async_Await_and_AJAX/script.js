@@ -395,3 +395,106 @@ const whereAmI2 = function () {
 };
 
 // whereAmI2();
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Challenge #2
+
+console.log('\n');
+console.log('---- Challenge #2 ----');
+
+const imgContainer = document.querySelector('.images');
+
+const createImage = function (imgPath) {
+  // when promisifying always return your promise
+  return new Promise(function (resolve, reject) {
+    const img = document.createElement('img');
+    img.src = imgPath;
+
+    img.addEventListener('load', function () {
+      imgContainer.append(img);
+      resolve(img);
+    });
+
+    img.addEventListener('error', function () {
+      reject(new Error('Image not found'));
+    });
+  });
+};
+
+let currentImage;
+
+createImage('img/img-1.jpg')
+  .then(img => {
+    currentImage = img;
+    console.log('Image 1 loaded');
+    return wait(2);
+  })
+  .then(() => {
+    currentImage.style.display = 'none';
+    return createImage('img/img-2.jpg');
+  })
+  .then(img => {
+    currentImage = img;
+    console.log('Image 2 loaded');
+    return wait(2);
+  })
+  .then(() => {
+    currentImage.style.display = 'none';
+  })
+  .catch(err => console.error(err));
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Consuming Promises with Async Await
+// Error handling with try...catch
+
+console.log('\n');
+console.log('---- Consuming Promises with Async Await ----');
+
+// when the function is done, it automatically returns a promise
+const whereAmI3 = async function () {
+  try {
+    // Geolocation
+    const pos = await getPosition(); // await the results of this promise
+    const { latitude: lat, longitude: lng } = pos.coords;
+
+    // Reverse geocoding
+    const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+    if (!resGeo.ok) throw new Error('Problem getting location data');
+
+    const dataGeo = await resGeo.json();
+    console.log(dataGeo);
+
+    // Country data
+
+    // fetch(`https://restcountries.com/v2/name/${country}`).then(res=>console.log(res))
+    // Same as using then, but more cleaner.
+
+    const res = await fetch(
+      `https://restcountries.com/v2/name/${dataGeo.country}`
+    );
+    if (!resGeo.ok) throw new Error('Problem getting country');
+
+    const data = await res.json();
+    // console.log(res)
+    // console.log(data);
+    renderCountry(data[0]);
+  } catch (err) {
+    console.error(`${err} ☹`);
+    renderError(` 😭 ${err.message}`);
+  }
+};
+
+whereAmI3();
+// whereAmI3();
+// whereAmI3();
+
+// try {
+//   let y = 1;
+//   const x = 2;
+//   x = 3;
+// } catch (err) {
+//   // have access to whatever error occured in try block
+//   alert(err.message);
+// }
