@@ -32,6 +32,13 @@ const renderError = function (msg) {
   countriesContainer.style.opacity = 1;
 };
 
+const getJSON = function (url, errorMsg = 'Something went wrong') {
+  return fetch(url).then(response => {
+    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+    return response.json();
+  });
+};
+
 ///////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
 // Our First AJAX Call_ XMLHttpRequest
@@ -194,13 +201,6 @@ const getCountryDataChaining = function (country) {
 
 console.log('\n');
 console.log('---- Handling Rejected Promises ----');
-
-const getJSON = function (url, errorMsg = 'Something went wrong') {
-  return fetch(url).then(response => {
-    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
-    return response.json();
-  });
-};
 
 const getCountryDataRej = function (country) {
   // country 1
@@ -480,21 +480,128 @@ const whereAmI3 = async function () {
     // console.log(res)
     // console.log(data);
     renderCountry(data[0]);
+
+    return `You are in ${dataGeo.city}, ${dataGeo.country}`;
   } catch (err) {
     console.error(`${err} ☹`);
     renderError(` 😭 ${err.message}`);
+
+    // Reject promise returned from async function
+    throw err;
   }
 };
 
-whereAmI3();
 // whereAmI3();
 // whereAmI3();
 
-// try {
-//   let y = 1;
-//   const x = 2;
-//   x = 3;
-// } catch (err) {
-//   // have access to whatever error occured in try block
-//   alert(err.message);
-// }
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Returning Values from Async Functions
+
+console.log('1: Will get location');
+
+// whereAmI3()
+//   .then(city => console.log(`2: ${city}`))
+//   .catch(err => console.error(`2: ${err.message}`))
+//   .finally(() => console.log('3: Finished getting location'));
+
+// Using async/await with immediately invoked function expressions (IIFE)
+(async function () {
+  try {
+    const city = await whereAmI3();
+    console.log(`2: ${city}`);
+  } catch (error) {
+    console.error(`2: ${err.message}`);
+  }
+  console.log('3: Finished getting location');
+})();
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Running promises in parallel
+
+// Ever use try catch with async
+
+const get3Countries = async function (c1, c2, c3) {
+  try {
+    // const [data1] = await getJSON(`https://restcountries.com/v2/name/${c1}`);
+    // const [data2] = await getJSON(`https://restcountries.com/v2/name/${c2}`);
+    // const [data3] = await getJSON(`https://restcountries.com/v2/name/${c3}`);
+
+    // console.log([data1.capital, data2.capital, data3.capital]);
+
+    // load many promises at the same time, instead one after another
+    // if one promise is rejected, all the promises are rejected
+    // usage case: if you need to do multiple asynchronous operations at the same time, and operations that don't depend on one another, then you should always run them in parallel
+    const data = await Promise.all([
+      getJSON(`https://restcountries.com/v2/name/${c1}`),
+      getJSON(`https://restcountries.com/v2/name/${c2}`),
+      getJSON(`https://restcountries.com/v2/name/${c3}`),
+    ]);
+    console.log(data.map(d => d[0].capital));
+  } catch (error) {
+    console.log(er);
+  }
+};
+
+get3Countries('portugal', 'canada', 'tanzania');
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Other promise combinators
+
+// promise.race
+// just like all other combinators, receives an array of promises and it also returns a promise
+// the promise returned by promise.race is settled as soon as one of the input promises settles (a value is available, but it doesn't matter if the promise got fullfiled or rejected)
+
+(async function () {
+  const res = await Promise.race([
+    getJSON(`https://restcountries.com/v2/name/italy`),
+    getJSON(`https://restcountries.com/v2/name/egypt`),
+    getJSON(`https://restcountries.com/v2/name/mexico`),
+  ]);
+  console.log(res[0]);
+  // only get one result, the fastest one
+})();
+
+const timeout = function (sec) {
+  return new Promise(function (_, reject) {
+    setTimeout(function () {
+      reject(new Error('request took too long!'));
+    }, sec * 1000);
+  });
+};
+
+Promise.race([
+  // if timeout happens first, all of this here will be rejected
+  getJSON(`https://restcountries.com/v2/name/tanzania`),
+  timeout(0.1),
+])
+  .then(res => console.log(res[0]))
+  .catch(err => console.error(err));
+
+// promise.allSettled
+// return an array of all the settled promises
+Promise.allSettled([
+  Promise.resolve('Success'),
+  Promise.reject('Error'),
+  Promise.resolve('Another Success'),
+]).then(res => console.log(res));
+
+Promise.all([
+  Promise.resolve('Success'),
+  Promise.reject('Error'),
+  Promise.resolve('Another Success'),
+])
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
+
+// promise.any [ES2021]
+// return the first fullfiled promise
+Promise.any([
+  Promise.resolve('Success'),
+  Promise.reject('Error'),
+  Promise.resolve('Another Success'),
+])
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
