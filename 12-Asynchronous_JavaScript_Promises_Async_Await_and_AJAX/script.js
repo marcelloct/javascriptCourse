@@ -605,3 +605,44 @@ Promise.any([
 ])
   .then(res => console.log(res))
   .catch(err => console.error(err));
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Challenge #3
+
+// PART 1
+const loadNPause = async function () {
+  try {
+    // load image 1
+    let img = await createImage('img/img-1.jpg');
+    console.log('Image 1 loaded');
+    await wait(2);
+    img.style.display = 'none';
+    // load image 2
+    img = await createImage('img/img-2.jpg');
+    console.log('Image 2 loaded');
+    await wait(2);
+    img.style.display = 'none';
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// loadNPause();
+
+// PART 2
+const loadAll = async function (imgArr) {
+  try {
+    const imgs = imgArr.map(async img => await createImage(img)); // results in a array of promises
+    console.log(imgs);
+
+    const imgsEl = await Promise.all(imgs); // handle the array of promises
+    console.log(imgsEl);
+
+    imgsEl.forEach(img => img.classList.add('parallel'));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// loadAll(['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']);
