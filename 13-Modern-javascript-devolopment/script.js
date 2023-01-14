@@ -104,3 +104,66 @@ console.log("---- CommonJS Modules ----");
 // mv  file ../ - move files (move file to parent folder, one level before)
 // rmdir - delete directory (only empty directories)
 // rm -R directoryname - delete directory and files inside
+
+////////////////////////////////////////////////////////////
+// Introduction to NPM
+
+console.log("\n");
+console.log("---- Introduction to NPM ----");
+
+// Node Package Manager
+
+// npm -v - Check version of npm and if have instaled in machine
+// npm init - start a new project (package.json)
+// npm install nameOfPackage / npm i nameOfPackage (Short Version) - install packages (node_modules folder)
+
+// NEVER include node_modules folder in Git or when you share your project
+// For install all dependencies/packages again just type in bash: npm i
+
+// npm i packagename@version - install a specific version of the package
+// npm uninstall package - uninstall a package
+// npm i package -g - install globally (prefere install localy)
+
+// leaflet / lodash-es
+
+// impractical usage, see next section to discover a better way
+// import cloneDeep from "./node_modules/lodash-es/cloneDeep.js";
+
+// better way, with parcel
+import cloneDeep from "lodash-es";
+
+const state = {
+  cart: [
+    { product: "bread", quantity: 5 },
+    { product: "rice", quantity: 5 },
+  ],
+  user: { loggedIn: true },
+};
+
+const stateClone = Object.assign({}, state);
+// loadash
+const stateDeepClone = cloneDeep(state);
+
+state.user.loggedIn = false;
+
+console.log(stateClone);
+console.log(stateDeepClone);
+
+////////////////////////////////////////////////////////////
+// Bundling With Parcel and NPM Scripts
+
+console.log("\n");
+console.log("---- Bundling With Parcel and NPM Scripts ----");
+
+// Simple to use
+// npm i parcel --save-dev
+
+// npx parcel index.html (file on the script are called)
+// remove type='module' from script tag when using parcel
+
+// parcel code
+if (module.hot) {
+  module.hot.accept();
+}
+
+// instead using npx parcel index.html all the time, create a script in package.json and call then (e.g: npm run scriptName)
