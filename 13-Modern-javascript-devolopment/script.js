@@ -167,3 +167,37 @@ if (module.hot) {
 }
 
 // instead using npx parcel index.html all the time, create a script in package.json and call then (e.g: npm run scriptName)
+// npm run build - bundling with parcel
+
+////////////////////////////////////////////////////////////
+// Configuring Babel and Polyfilling
+
+console.log("\n");
+console.log("---- Configuring Babel and Polyfilling ----");
+
+// configure babel to transpile or super modern code back to ES5 code
+// for old browsers can work for everyone
+
+class Person {
+  greeting = "Hey";
+  constructor(name) {
+    this.name = name;
+    console.log(`${this.greeting}, ${this.name}`);
+  }
+}
+
+const jonas = new Person("Jonas");
+
+console.log("Jonas" ?? null);
+
+Promise.resolve("TEST").then(x => console.log(x));
+
+// npm i core-js
+
+import "core-js/stable";
+// import "core-js/stable/array/find";
+// import "core-js/stable/promise";
+
+// Polifilling async functions
+// npm i regenerator-runtime
+import "regenerator-runtime/runtime";
