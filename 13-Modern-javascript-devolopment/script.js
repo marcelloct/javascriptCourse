@@ -177,6 +177,7 @@ console.log("---- Configuring Babel and Polyfilling ----");
 
 // configure babel to transpile or super modern code back to ES5 code
 // for old browsers can work for everyone
+// parcel automatically uses Babel to transpile our code
 
 class Person {
   greeting = "Hey";
@@ -201,3 +202,8 @@ import "core-js/stable";
 // Polifilling async functions
 // npm i regenerator-runtime
 import "regenerator-runtime/runtime";
+
+////////////////////////////////////////////////////////////
+// Let's Fix Some Bad Code!
+
+// - View clean.js file
