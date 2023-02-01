@@ -156,7 +156,7 @@ console.log("\n");
 console.log("---- Bundling With Parcel and NPM Scripts ----");
 
 // Simple to use
-// npm i parcel --save-dev
+// npm i parcel --save-dev || npm i parcel -D
 
 // npx parcel index.html (file on the script are called)
 // remove type='module' from script tag when using parcel
