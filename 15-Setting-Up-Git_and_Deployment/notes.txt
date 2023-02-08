@@ -1,0 +1,16 @@
+Deployment With Netlify 
+
+- Delete .parcel-cache and dist folder (before run build)
+- Change "main": "index.html" to "default": "index.html"
+- Change to "build": "parcel build index.html --dist-dir ./dist"
+- Run the build command in the project
+
+- Drag and drop the dist folder to Netlify to deploy the application
+
+Git commands
+
+git log (show all commits)
+git reset --hard HEAD (delete modifications in files and set back to previously commit code)
+git reset --hard 5718925789145793457(id do commit)  (delete a specific commit) (NOT recommended)
+git branch new-branchname
+git checkout branchname
