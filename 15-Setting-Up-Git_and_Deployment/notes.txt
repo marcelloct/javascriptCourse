@@ -9,8 +9,18 @@ Deployment With Netlify
 
 Git commands
 
+NOT need upload dist folder to github 
+
 git log (show all commits)
 git reset --hard HEAD (delete modifications in files and set back to previously commit code)
 git reset --hard 5718925789145793457(id do commit)  (delete a specific commit) (NOT recommended)
 git branch new-branchname
 git checkout branchname
+
+If exists more than one branch, is necessary use push origin in everyone
+
+Normally starts the project in github and use pull to get the project locally
+
+Setting Up continuous Integration With Netlify
+
+Settings -> Build & Deploy -> Link site to git -> Link your account -> in build command use the command in package file 'parcel build index.html --dist-dir ./dist'  -> in public directory field use dist
